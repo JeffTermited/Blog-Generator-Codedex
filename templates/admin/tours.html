@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>行程管理 - Pack&Go</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #1a1a1a;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+            --accent-white: #ffffff;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-gray);
+        }
+        
+        .navbar {
+            background-color: var(--primary-black) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .navbar-brand {
+            font-weight: bold;
+            font-size: 1.5rem;
+            color: var(--accent-white) !important;
+        }
+        
+        .sidebar {
+            background: var(--accent-white);
+            min-height: calc(100vh - 76px);
+            box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+        }
+        
+        .sidebar .nav-link {
+            color: var(--dark-gray);
+            padding: 1rem 1.5rem;
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .sidebar .nav-link:hover,
+        .sidebar .nav-link.active {
+            background-color: var(--primary-black);
+            color: var(--accent-white);
+        }
+        
+        .sidebar .nav-link i {
+            width: 20px;
+            margin-right: 10px;
+        }
+        
+        .main-content {
+            padding: 2rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-black);
+            border-color: var(--primary-black);
+            border-radius: 10px;
+            padding: 10px 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-black);
+            border-color: var(--secondary-black);
+            transform: translateY(-2px);
+        }
+        
+        .table {
+            background: var(--accent-white);
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .table th {
+            background-color: var(--primary-black);
+            color: var(--accent-white);
+            border: none;
+            font-weight: bold;
+        }
+        
+        .table td {
+            vertical-align: middle;
+        }
+        
+        .badge {
+            border-radius: 20px;
+            padding: 8px 15px;
+        }
+        
+        .page-header {
+            background: var(--accent-white);
+            padding: 2rem;
+            border-radius: 15px;
+            margin-bottom: 2rem;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/admin/dashboard">
+                <i class="fas fa-plane"></i> Pack&Go 管理後台
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> 查看網站
+                </a>
+                <a class="nav-link" href="/admin/logout">
+                    <i class="fas fa-sign-out-alt"></i> 登出
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <!-- 側邊欄 -->
+            <div class="col-md-3 col-lg-2 px-0">
+                <div class="sidebar">
+                    <nav class="nav flex-column">
+                        <a class="nav-link" href="/admin/dashboard">
+                            <i class="fas fa-tachometer-alt"></i> 儀表板
+                        </a>
+                        <a class="nav-link active" href="/admin/tours">
+                            <i class="fas fa-map-marked-alt"></i> 旅遊行程
+                        </a>
+                        <a class="nav-link" href="/admin/promotions">
+                            <i class="fas fa-tag"></i> 優惠活動
+                        </a>
+                    </nav>
+                </div>
+            </div>
+
+            <!-- 主要內容 -->
+            <div class="col-md-9 col-lg-10">
+                <div class="main-content">
+                    <!-- 頁面標題 -->
+                    <div class="page-header">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <h1 class="mb-0">
+                                    <i class="fas fa-map-marked-alt"></i> 旅遊行程管理
+                                </h1>
+                                <p class="text-muted mb-0">管理所有旅遊行程資訊</p>
+                            </div>
+                            <a href="/admin/tour/add" class="btn btn-primary">
+                                <i class="fas fa-plus"></i> 新增行程
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- 訊息提示 -->
+                    {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert alert-success" role="alert">
+                                    <i class="fas fa-check-circle"></i> {{ message }}
+                                </div>
+                            {% endfor %}
+                        {% endif %}
+                    {% endwith %}
+
+                    <!-- 行程列表 -->
+                    <div class="card">
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-hover mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th>行程名稱</th>
+                                            <th>類別</th>
+                                            <th>價格</th>
+                                            <th>天數</th>
+                                            <th>精選</th>
+                                            <th>建立時間</th>
+                                            <th>操作</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for tour in tours %}
+                                        <tr>
+                                            <td>
+                                                <strong>{{ tour.title }}</strong>
+                                                <br>
+                                                <small class="text-muted">{{ tour.description[:50] }}...</small>
+                                            </td>
+                                            <td>
+                                                <span class="badge bg-secondary">{{ tour.category }}</span>
+                                            </td>
+                                            <td>
+                                                <strong>NT$ {{ "{:,.0f}".format(tour.price) }}</strong>
+                                            </td>
+                                            <td>{{ tour.duration }}</td>
+                                            <td>
+                                                {% if tour.is_featured %}
+                                                <span class="badge bg-warning text-dark">
+                                                    <i class="fas fa-star"></i> 精選
+                                                </span>
+                                                {% else %}
+                                                <span class="badge bg-light text-dark">一般</span>
+                                                {% endif %}
+                                            </td>
+                                            <td>{{ tour.created_at.strftime('%Y-%m-%d') }}</td>
+                                            <td>
+                                                <div class="btn-group" role="group">
+                                                    <a href="/admin/tour/edit/{{ tour.id }}" class="btn btn-sm btn-outline-primary">
+                                                        <i class="fas fa-edit"></i> 編輯
+                                                    </a>
+                                                    <a href="/admin/tour/delete/{{ tour.id }}" class="btn btn-sm btn-outline-danger" 
+                                                       onclick="return confirm('確定要刪除這個行程嗎？')">
+                                                        <i class="fas fa-trash"></i> 刪除
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% if not tours %}
+                    <div class="text-center py-5">
+                        <i class="fas fa-map-marked-alt" style="font-size: 4rem; color: #ccc; margin-bottom: 2rem;"></i>
+                        <h3>目前沒有行程</h3>
+                        <p class="text-muted">開始新增您的第一個旅遊行程吧！</p>
+                        <a href="/admin/tour/add" class="btn btn-primary">
+                            <i class="fas fa-plus"></i> 新增行程
+                        </a>
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
