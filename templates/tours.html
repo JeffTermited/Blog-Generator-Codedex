@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pack&Go - 專業旅行社服務</title>
+    <title>旅遊行程 - Pack&Go</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -42,69 +42,37 @@
             color: #cccccc !important;
         }
         
-        .hero-section {
+        .page-header {
             background: linear-gradient(135deg, var(--primary-black) 0%, var(--secondary-black) 100%);
             color: var(--accent-white);
-            padding: 120px 0;
+            padding: 100px 0 60px;
             text-align: center;
         }
         
-        .hero-title {
-            font-size: 3.5rem;
+        .page-title {
+            font-size: 3rem;
             font-weight: bold;
             margin-bottom: 1rem;
         }
         
-        .hero-subtitle {
-            font-size: 1.3rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
+        .filter-buttons {
+            margin: 2rem 0;
         }
         
-        .btn-primary {
+        .filter-btn {
             background-color: var(--accent-white);
             color: var(--primary-black);
-            border: none;
-            padding: 12px 30px;
-            font-weight: bold;
+            border: 2px solid var(--primary-black);
+            padding: 10px 20px;
+            margin: 0 5px;
             border-radius: 25px;
-            transition: all 0.3s ease;
-        }
-        
-        .btn-primary:hover {
-            background-color: #f0f0f0;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-        
-        .section-title {
-            font-size: 2.5rem;
             font-weight: bold;
-            text-align: center;
-            margin-bottom: 3rem;
-            color: var(--primary-black);
-        }
-        
-        .service-card {
-            background: var(--accent-white);
-            border: 2px solid var(--light-gray);
-            border-radius: 15px;
-            padding: 2rem;
-            text-align: center;
             transition: all 0.3s ease;
-            height: 100%;
         }
         
-        .service-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.1);
-            border-color: var(--primary-black);
-        }
-        
-        .service-icon {
-            font-size: 3rem;
-            color: var(--primary-black);
-            margin-bottom: 1rem;
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--primary-black);
+            color: var(--accent-white);
         }
         
         .tour-card {
@@ -114,6 +82,7 @@
             overflow: hidden;
             transition: all 0.3s ease;
             height: 100%;
+            margin-bottom: 2rem;
         }
         
         .tour-card:hover {
@@ -122,7 +91,7 @@
         }
         
         .tour-image {
-            height: 200px;
+            height: 250px;
             background-size: cover;
             background-position: center;
             background-color: var(--light-gray);
@@ -131,23 +100,39 @@
         .tour-price {
             color: var(--primary-black);
             font-weight: bold;
-            font-size: 1.2rem;
+            font-size: 1.3rem;
         }
         
-        .promotion-badge {
-            background: linear-gradient(45deg, var(--primary-black), var(--secondary-black));
+        .tour-category {
+            background-color: var(--primary-black);
             color: var(--accent-white);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 0.9rem;
             font-weight: bold;
-            display: inline-block;
-            margin-bottom: 1rem;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-black);
+            color: var(--accent-white);
+            border: none;
+            padding: 12px 30px;
+            font-weight: bold;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--secondary-black);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
         .footer {
             background-color: var(--primary-black);
             color: var(--accent-white);
             padding: 3rem 0 1rem;
+            margin-top: 4rem;
         }
         
         .footer h5 {
@@ -169,16 +154,6 @@
             margin-right: 1rem;
             color: var(--accent-white);
         }
-        
-        .logo {
-            font-weight: bold;
-            font-size: 2rem;
-            color: var(--accent-white);
-        }
-        
-        .logo span {
-            color: #cccccc;
-        }
     </style>
 </head>
 <body>
@@ -197,7 +172,7 @@
                         <a class="nav-link" href="/">首頁</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/tours">旅遊行程</a>
+                        <a class="nav-link active" href="/tours">旅遊行程</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/services">服務項目</a>
@@ -213,122 +188,64 @@
         </div>
     </nav>
 
-    <!-- 主橫幅 -->
-    <section class="hero-section">
+    <!-- 頁面標題 -->
+    <section class="page-header">
         <div class="container">
-            <h1 class="hero-title">探索世界的美好</h1>
-            <p class="hero-subtitle">Pack&Go 為您提供最專業的旅遊服務，讓每一次旅程都成為難忘的回憶</p>
-            <a href="/tours" class="btn btn-primary btn-lg">
-                <i class="fas fa-search"></i> 探索行程
-            </a>
+            <h1 class="page-title">旅遊行程</h1>
+            <p class="lead">探索我們精心規劃的各種旅遊行程</p>
         </div>
     </section>
 
-    <!-- 服務項目 -->
-    <section class="py-5">
+    <!-- 篩選按鈕 -->
+    <section class="py-4">
         <div class="container">
-            <h2 class="section-title">我們的服務</h2>
-            <div class="row g-4">
-                <div class="col-md-4">
-                    <div class="service-card">
-                        <i class="fas fa-users service-icon"></i>
-                        <h4>包團旅遊</h4>
-                        <p>精心規劃的團體旅遊，讓您與親朋好友一起享受美好的旅程時光。</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="service-card">
-                        <i class="fas fa-map-marked-alt service-icon"></i>
-                        <h4>客製旅遊</h4>
-                        <p>根據您的需求量身打造專屬行程，創造獨一無二的旅遊體驗。</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="service-card">
-                        <i class="fas fa-ship service-icon"></i>
-                        <h4>郵輪假期</h4>
-                        <p>豪華郵輪之旅，在海上享受奢華舒適的度假體驗。</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="service-card">
-                        <i class="fas fa-plane service-icon"></i>
-                        <h4>機票預訂</h4>
-                        <p>全球各大航空公司機票，為您找到最優惠的價格。</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="service-card">
-                        <i class="fas fa-hotel service-icon"></i>
-                        <h4>飯店住宿</h4>
-                        <p>精選全球優質飯店，確保您的住宿品質與舒適度。</p>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="service-card">
-                        <i class="fas fa-passport service-icon"></i>
-                        <h4>中國簽證</h4>
-                        <p>專業的簽證代辦服務，讓您輕鬆取得中國旅遊簽證。</p>
-                    </div>
-                </div>
+            <div class="filter-buttons text-center">
+                <a href="/tours" class="btn filter-btn {% if not category %}active{% endif %}">全部行程</a>
+                <a href="/tours?category=包團旅遊" class="btn filter-btn {% if category == '包團旅遊' %}active{% endif %}">包團旅遊</a>
+                <a href="/tours?category=客製旅遊" class="btn filter-btn {% if category == '客製旅遊' %}active{% endif %}">客製旅遊</a>
+                <a href="/tours?category=郵輪" class="btn filter-btn {% if category == '郵輪' %}active{% endif %}">郵輪假期</a>
             </div>
         </div>
     </section>
 
-    <!-- 精選行程 -->
-    {% if featured_tours %}
-    <section class="py-5" style="background-color: var(--light-gray);">
+    <!-- 行程列表 -->
+    <section class="py-5">
         <div class="container">
-            <h2 class="section-title">精選行程</h2>
-            <div class="row g-4">
-                {% for tour in featured_tours %}
+            {% if tours %}
+            <div class="row">
+                {% for tour in tours %}
                 <div class="col-lg-4 col-md-6">
                     <div class="tour-card">
-                        <div class="tour-image" style="background-image: url('{{ tour.image_url or "https://via.placeholder.com/400x200/000000/ffffff?text=Pack&Go" }}');"></div>
+                        <div class="tour-image" style="background-image: url('{{ tour.image_url or "https://via.placeholder.com/400x250/000000/ffffff?text=Pack&Go" }}');"></div>
                         <div class="card-body p-4">
-                            <h5 class="card-title">{{ tour.title }}</h5>
-                            <p class="card-text">{{ tour.description[:100] }}...</p>
-                            <div class="d-flex justify-content-between align-items-center">
+                            <div class="d-flex justify-content-between align-items-start mb-3">
+                                <span class="tour-category">{{ tour.category }}</span>
                                 <span class="tour-price">NT$ {{ "{:,.0f}".format(tour.price) }}</span>
-                                <span class="badge bg-dark">{{ tour.duration }}</span>
                             </div>
-                            <a href="/tour/{{ tour.id }}" class="btn btn-outline-dark mt-3 w-100">查看詳情</a>
+                            <h5 class="card-title mb-3">{{ tour.title }}</h5>
+                            <p class="card-text text-muted">{{ tour.description[:120] }}...</p>
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                <span class="badge bg-secondary">{{ tour.duration }}</span>
+                                {% if tour.is_featured %}
+                                <span class="badge bg-warning text-dark">精選</span>
+                                {% endif %}
+                            </div>
+                            <a href="/tour/{{ tour.id }}" class="btn btn-primary w-100">查看詳情</a>
                         </div>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-            <div class="text-center mt-4">
-                <a href="/tours" class="btn btn-primary btn-lg">查看更多行程</a>
+            {% else %}
+            <div class="text-center py-5">
+                <i class="fas fa-search" style="font-size: 4rem; color: #ccc; margin-bottom: 2rem;"></i>
+                <h3>目前沒有相關行程</h3>
+                <p class="text-muted">請稍後再來查看，或聯絡我們詢問客製行程</p>
+                <a href="/contact" class="btn btn-primary">聯絡我們</a>
             </div>
+            {% endif %}
         </div>
     </section>
-    {% endif %}
-
-    <!-- 優惠活動 -->
-    {% if promotions %}
-    <section class="py-5">
-        <div class="container">
-            <h2 class="section-title">限時優惠</h2>
-            <div class="row g-4">
-                {% for promotion in promotions %}
-                <div class="col-md-6">
-                    <div class="card border-dark">
-                        <div class="card-body p-4">
-                            <div class="promotion-badge">
-                                <i class="fas fa-tag"></i> {{ promotion.discount_percentage }}% OFF
-                            </div>
-                            <h4 class="card-title">{{ promotion.title }}</h4>
-                            <p class="card-text">{{ promotion.description }}</p>
-                            <small class="text-muted">優惠期限至：{{ promotion.valid_until.strftime('%Y年%m月%d日') }}</small>
-                        </div>
-                    </div>
-                </div>
-                {% endfor %}
-            </div>
-        </div>
-    </section>
-    {% endif %}
 
     <!-- 頁腳 -->
     <footer class="footer">
