@@ -1,0 +1,113 @@
+{% extends "base.html" %}
+
+{% block title %}旅遊套裝 - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<!-- 頁面標題 -->
+<section class="hero" style="padding: 4rem 0;">
+    <div class="container">
+        <h1>旅遊套裝</h1>
+        <p class="hero-description">
+            精心規劃的旅遊套裝，涵蓋各種目的地與主題，讓您輕鬆享受完美的旅行體驗。
+        </p>
+    </div>
+</section>
+
+<!-- 套裝列表 -->
+<section class="featured-packages">
+    <div class="container">
+        {% if travel_packages %}
+        <div class="packages-grid">
+            {% for package in travel_packages %}
+            <div class="package-card">
+                <div class="package-image" style="background-image: url('{{ package.image_url }}');"></div>
+                <div class="package-content">
+                    <h3>{{ package.title }}</h3>
+                    <div class="package-price">NT$ {{ package.price }}</div>
+                    <p>{{ package.description }}</p>
+                    <p><strong>行程天數:</strong> {{ package.duration }}</p>
+                    
+                    {% if package.highlights %}
+                    <div style="margin-top: 1rem;">
+                        <strong>行程亮點:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1rem; text-align: left;">
+                            {% for highlight in package.highlights %}
+                                {% if highlight.strip() %}
+                                <li>{{ highlight.strip() }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    
+                    <div style="margin-top: 1rem;">
+                        <span style="background-color: var(--light-gray); padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.8rem;">
+                            {% if package.service_type == 'group-tour' %}包團旅遊
+                            {% elif package.service_type == 'custom-tour' %}客製旅遊
+                            {% elif package.service_type == 'cruise' %}郵輪服務
+                            {% elif package.service_type == 'flight' %}機票服務
+                            {% elif package.service_type == 'hotel' %}飯店住宿
+                            {% elif package.service_type == 'visa' %}簽證服務
+                            {% else %}旅遊套裝
+                            {% endif %}
+                        </span>
+                    </div>
+                    
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary" style="margin-top: 1rem;">立即諮詢</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div style="text-align: center; padding: 3rem 0;">
+            <h3>目前尚無旅遊套裝</h3>
+            <p style="color: var(--medium-gray); margin: 1rem 0;">
+                我們正在準備精彩的旅遊套裝，請稍後再來查看，或直接聯絡我們詢問客製化行程。
+            </p>
+            <a href="{{ url_for('contact') }}" class="btn btn-primary">聯絡我們</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- 服務介紹 -->
+<section class="services">
+    <div class="container">
+        <h2 class="section-title">為什麼選擇我們的套裝？</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🎯</div>
+                <h3>精心規劃</h3>
+                <p>每個套裝都經過我們專業團隊的精心設計，確保行程豐富且合理。</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💰</div>
+                <h3>超值價格</h3>
+                <p>團體優惠價格，包含各項必要費用，讓您省心又省錢。</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">👨‍💼</div>
+                <h3>專業服務</h3>
+                <p>專業導遊隨團服務，24小時客服支援，確保旅程順利。</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 客製化服務 -->
+<section class="services" style="background-color: var(--primary-black); color: var(--primary-white);">
+    <div class="container">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <h2 class="section-title" style="color: var(--primary-white);">找不到合適的套裝？</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; color: var(--light-gray);">
+                我們也提供客製化旅遊服務！根據您的需求、預算和時間，為您量身打造專屬的旅行體驗。
+                無論是蜜月旅行、親子旅遊或企業員工旅遊，我們都能滿足您的期待。
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="{{ url_for('service_detail', service_type='custom-tour') }}" class="btn btn-outline">客製旅遊</a>
+                <a href="{{ url_for('contact') }}" class="btn btn-outline">立即諮詢</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

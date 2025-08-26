@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "title": "日本東京經典5日遊",
+    "description": "探索東京的魅力，從傳統的淺草寺到現代的晴空塔，體驗日本文化的精髓。包含溫泉體驗、美食品嚐及購物行程。",
+    "price": "32800",
+    "duration": "5天4夜",
+    "service_type": "group-tour",
+    "image_url": "/static/images/tokyo-tour.jpg",
+    "highlights": [
+      "參觀東京晴空塔，俯瞰東京全景",
+      "體驗正宗日式溫泉",
+      "品嚐道地日式料理",
+      "淺草寺文化巡禮",
+      "銀座購物體驗",
+      "專業中文導遊陪同"
+    ],
+    "created_at": "2024-01-15T10:30:00"
+  },
+  {
+    "id": 2,
+    "title": "韓國首爾購物美食4日遊",
+    "description": "首爾自由行，體驗韓流文化、品嚐韓式美食、享受購物樂趣。包含明洞、東大門、江南區等熱門景點。",
+    "price": "18900",
+    "duration": "4天3夜",
+    "service_type": "group-tour",
+    "image_url": "/static/images/seoul-tour.jpg",
+    "highlights": [
+      "明洞購物街血拚",
+      "品嚐韓式烤肉、泡菜等美食",
+      "景福宮古韓服體驗",
+      "弘大夜生活體驗",
+      "江南區時尚購物",
+      "含機場接送服務"
+    ],
+    "created_at": "2024-01-20T14:15:00"
+  },
+  {
+    "id": 3,
+    "title": "地中海豪華郵輪7日遊",
+    "description": "搭乘豪華郵輪暢遊地中海，造訪義大利、法國、西班牙等多個港口城市，享受海上度假的奢華體驗。",
+    "price": "89000",
+    "duration": "7天6夜",
+    "service_type": "cruise",
+    "image_url": "/static/images/mediterranean-cruise.jpg",
+    "highlights": [
+      "豪華郵輪住宿",
+      "造訪羅馬、巴塞隆納、馬賽等城市",
+      "船上娛樂表演與設施",
+      "米其林等級餐飲服務",
+      "岸上觀光行程",
+      "無限海景房升等機會"
+    ],
+    "created_at": "2024-01-25T09:45:00"
+  }
+]

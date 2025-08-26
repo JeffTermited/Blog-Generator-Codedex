@@ -1,0 +1,122 @@
+.logo {
+  display: inline-flex;
+  align-items: center;
+  font-weight: 700;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.logo-icon svg {
+  transition: transform 0.2s ease;
+}
+
+.logo:hover .logo-icon svg {
+  transform: scale(1.05);
+}
+
+.logo-text {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  font-family: 'Inter', sans-serif;
+}
+
+.logo-pack {
+  font-weight: 700;
+}
+
+.logo-and {
+  font-weight: 400;
+  opacity: 0.8;
+}
+
+.logo-go {
+  font-weight: 700;
+}
+
+/* 尺寸变体 */
+.logo-small {
+  font-size: 18px;
+}
+
+.logo-small .logo-icon svg {
+  width: 24px;
+  height: 24px;
+}
+
+.logo-small .logo-container {
+  gap: 8px;
+}
+
+.logo-medium {
+  font-size: 24px;
+}
+
+.logo-medium .logo-icon svg {
+  width: 32px;
+  height: 32px;
+}
+
+.logo-large {
+  font-size: 32px;
+}
+
+.logo-large .logo-icon svg {
+  width: 48px;
+  height: 48px;
+}
+
+.logo-large .logo-container {
+  gap: 16px;
+}
+
+/* 颜色变体 */
+.logo-black {
+  color: var(--primary-black);
+}
+
+.logo-white {
+  color: var(--primary-white);
+}
+
+.logo-gray {
+  color: var(--gray-600);
+}
+
+/* 悬停效果 */
+.logo:hover {
+  transform: translateY(-1px);
+}
+
+/* 响应式 */
+@media (max-width: 768px) {
+  .logo-medium {
+    font-size: 20px;
+  }
+  
+  .logo-medium .logo-icon svg {
+    width: 28px;
+    height: 28px;
+  }
+  
+  .logo-large {
+    font-size: 28px;
+  }
+  
+  .logo-large .logo-icon svg {
+    width: 40px;
+    height: 40px;
+  }
+}

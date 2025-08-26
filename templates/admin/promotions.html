@@ -1,0 +1,139 @@
+{% extends "admin/base.html" %}
+
+{% block title %}優惠管理 - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1>優惠管理</h1>
+    <p>管理所有的優惠活動</p>
+</div>
+
+<!-- 操作按鈕 -->
+<div style="margin-bottom: 2rem;">
+    <a href="{{ url_for('admin_add_promotion') }}" class="btn btn-primary">新增優惠活動</a>
+</div>
+
+<!-- 優惠列表 -->
+{% if promotions %}
+<div class="service-card">
+    <div style="overflow-x: auto;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>優惠名稱</th>
+                    <th>折扣內容</th>
+                    <th>有效期限</th>
+                    <th>狀態</th>
+                    <th>建立時間</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for promotion in promotions %}
+                <tr>
+                    <td>{{ promotion.id }}</td>
+                    <td>
+                        <strong>{{ promotion.title }}</strong><br>
+                        <small style="color: var(--medium-gray);">
+                            {{ promotion.description[:50] }}{% if promotion.description|length > 50 %}...{% endif %}
+                        </small>
+                    </td>
+                    <td>
+                        <strong style="color: #dc3545;">{{ promotion.discount }}</strong>
+                    </td>
+                    <td>
+                        {% if promotion.valid_until %}
+                            {{ promotion.valid_until }}
+                        {% else %}
+                            <span style="color: var(--medium-gray);">無期限</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        <span style="padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.8rem; color: white;
+                                     background-color: {{ '#28a745' if promotion.is_active else '#6c757d' }};">
+                            {{ '進行中' if promotion.is_active else '已停用' }}
+                        </span>
+                    </td>
+                    <td>{{ promotion.created_at[:10] if promotion.created_at else '未知' }}</td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <a href="{{ url_for('admin_edit_promotion', promotion_id=promotion.id) }}" 
+                               class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;">
+                                編輯
+                            </a>
+                            <form method="POST" action="{{ url_for('admin_delete_promotion', promotion_id=promotion.id) }}" 
+                                  style="display: inline;" 
+                                  onsubmit="return confirm('確定要刪除這個優惠活動嗎？')">
+                                <button type="submit" class="btn" 
+                                        style="font-size: 0.8rem; padding: 0.3rem 0.8rem; background-color: #dc3545; color: white; border-color: #dc3545;">
+                                    刪除
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 統計資訊 -->
+<div style="margin-top: 2rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div class="service-card" style="text-align: center;">
+            <h4>總優惠數</h4>
+            <div style="font-size: 2rem; font-weight: bold; color: var(--primary-black);">
+                {{ promotions|length }}
+            </div>
+        </div>
+        
+        <div class="service-card" style="text-align: center;">
+            <h4>進行中</h4>
+            <div style="font-size: 2rem; font-weight: bold; color: #28a745;">
+                {{ promotions|selectattr('is_active')|list|length }}
+            </div>
+        </div>
+        
+        <div class="service-card" style="text-align: center;">
+            <h4>已停用</h4>
+            <div style="font-size: 2rem; font-weight: bold; color: #6c757d;">
+                {{ promotions|rejectattr('is_active')|list|length }}
+            </div>
+        </div>
+        
+        <div class="service-card" style="text-align: center;">
+            <h4>有期限優惠</h4>
+            <div style="font-size: 2rem; font-weight: bold; color: var(--primary-black);">
+                {{ promotions|selectattr('valid_until')|list|length }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="service-card" style="text-align: center; padding: 3rem;">
+    <div class="service-icon" style="background-color: var(--medium-gray);">🎉</div>
+    <h3>尚無優惠活動</h3>
+    <p style="color: var(--medium-gray); margin: 1rem 0;">
+        開始新增您的第一個優惠活動吧！
+    </p>
+    <a href="{{ url_for('admin_add_promotion') }}" class="btn btn-primary">新增優惠活動</a>
+</div>
+{% endif %}
+
+<!-- 優惠活動提示 -->
+<div style="margin-top: 2rem;">
+    <div class="service-card" style="background-color: var(--light-gray);">
+        <h3>💡 優惠活動小貼士</h3>
+        <ul style="text-align: left; line-height: 1.8; margin-top: 1rem;">
+            <li><strong>吸引標題：</strong>使用簡潔有力的標題來吸引客戶注意</li>
+            <li><strong>明確折扣：</strong>清楚說明折扣內容，如「9折」、「滿萬送千」等</li>
+            <li><strong>期限設定：</strong>適當設定優惠期限可以增加緊迫感</li>
+            <li><strong>條件說明：</strong>在條款中詳細說明優惠適用條件</li>
+            <li><strong>定期更新：</strong>定期檢查並更新優惠狀態，停用過期優惠</li>
+        </ul>
+    </div>
+</div>
+{% endblock %}

@@ -1,48 +1,154 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Blog Generator 📝</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      background-color: #f8f9fa;
-    }
-    h1 {
-      color: #343a40;
-    }
-    textarea {
-      width: 100%;
-      height: 200px;
-      margin-top: 1rem;
-      font-size: 16px;
-    }
-    input[type="text"] {
-      width: 300px;
-      padding: 0.5rem;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      background-color: #198754;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-left: 0.5rem;
-    }
-  </style>
-</head>
-<body>
-  <h1>📝 Blog Generator</h1>
-  <form method="post">
-    <label for="topic">Enter your blog topic:</label>
-    <input type="text" id="topic" name="topic" required>
-    <button type="submit">Generate</button>
-  </form>
+{% extends "base.html" %}
 
-  {% if blog_text %}
-    <h2>🪐 Topic: {{ topic }}</h2>
-    <textarea readonly>{{ blog_text }}</textarea>
-  {% endif %}
-</body>
-</html>
+{% block title %}Pack&Go 旅行社 - 專業旅遊服務{% endblock %}
+
+{% block content %}
+<!-- 英雄區塊 -->
+<section class="hero">
+    <div class="container">
+        <h1>Pack&Go</h1>
+        <p class="subtitle">您的專業旅遊夥伴</p>
+        <p class="hero-description">
+            Pack&Go 旅行社提供全方位的旅遊服務，包含包團旅遊、客製化行程、郵輪假期、機票預訂、飯店住宿以及中國簽證代辦。
+            我們致力於為每一位客戶打造難忘的旅行體驗，讓您的每一趟旅程都充滿驚喜與美好回憶。
+        </p>
+        <a href="{{ url_for('services') }}" class="btn btn-outline">探索我們的服務</a>
+    </div>
+</section>
+
+<!-- 服務項目 -->
+<section class="services">
+    <div class="container">
+        <h2 class="section-title">我們的服務</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3>包團旅遊</h3>
+                <p>專業的團體旅遊規劃，提供完整的行程安排與導遊服務，讓您輕鬆享受團體旅行的樂趣。</p>
+                <a href="{{ url_for('service_detail', service_type='group-tour') }}" class="btn btn-secondary" style="margin-top: 1rem;">了解更多</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">✈️</div>
+                <h3>客製旅遊</h3>
+                <p>量身打造的個人化旅遊行程，根據您的喜好與需求，設計專屬於您的完美旅程。</p>
+                <a href="{{ url_for('service_detail', service_type='custom-tour') }}" class="btn btn-secondary" style="margin-top: 1rem;">了解更多</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🚢</div>
+                <h3>郵輪服務</h3>
+                <p>豪華郵輪假期預訂，體驗海上度假的奢華與舒適，享受無與倫比的海上旅程。</p>
+                <a href="{{ url_for('service_detail', service_type='cruise') }}" class="btn btn-secondary" style="margin-top: 1rem;">了解更多</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🎫</div>
+                <h3>機票服務</h3>
+                <p>國內外機票預訂服務，提供最優惠的價格與最便利的訂票體驗。</p>
+                <a href="{{ url_for('service_detail', service_type='flight') }}" class="btn btn-secondary" style="margin-top: 1rem;">了解更多</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🏨</div>
+                <h3>飯店住宿</h3>
+                <p>精選優質住宿，從商務飯店到度假村，為您提供舒適的住宿體驗。</p>
+                <a href="{{ url_for('service_detail', service_type='hotel') }}" class="btn btn-secondary" style="margin-top: 1rem;">了解更多</a>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">📋</div>
+                <h3>中國簽證</h3>
+                <p>專業的中國簽證申請代辦服務，簡化申請流程，讓您輕鬆取得簽證。</p>
+                <a href="{{ url_for('service_detail', service_type='visa') }}" class="btn btn-secondary" style="margin-top: 1rem;">了解更多</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 特色旅遊套裝 -->
+{% if travel_packages %}
+<section class="featured-packages">
+    <div class="container">
+        <h2 class="section-title">精選旅遊套裝</h2>
+        <div class="packages-grid">
+            {% for package in travel_packages %}
+            <div class="package-card">
+                <div class="package-image" style="background-image: url('{{ package.image_url }}');"></div>
+                <div class="package-content">
+                    <h3>{{ package.title }}</h3>
+                    <div class="package-price">NT$ {{ package.price }}</div>
+                    <p>{{ package.description }}</p>
+                    <p><strong>行程天數:</strong> {{ package.duration }}</p>
+                    {% if package.highlights %}
+                    <div style="margin-top: 1rem;">
+                        <strong>行程亮點:</strong>
+                        <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                            {% for highlight in package.highlights %}
+                                {% if highlight.strip() %}
+                                <li>{{ highlight.strip() }}</li>
+                                {% endif %}
+                            {% endfor %}
+                        </ul>
+                    </div>
+                    {% endif %}
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary" style="margin-top: 1rem;">立即諮詢</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('packages') }}" class="btn btn-secondary">查看所有套裝</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- 優惠資訊 -->
+{% if promotions %}
+<section class="services" style="background-color: var(--primary-white);">
+    <div class="container">
+        <h2 class="section-title">最新優惠</h2>
+        <div class="services-grid">
+            {% for promotion in promotions %}
+                {% if promotion.is_active %}
+                <div class="service-card" style="border: 2px solid var(--primary-black);">
+                    <div class="service-icon">🎉</div>
+                    <h3>{{ promotion.title }}</h3>
+                    <p>{{ promotion.description }}</p>
+                    <div style="margin-top: 1rem;">
+                        <strong style="color: var(--primary-black); font-size: 1.2rem;">{{ promotion.discount }}</strong>
+                    </div>
+                    {% if promotion.valid_until %}
+                    <p style="color: var(--medium-gray); font-size: 0.9rem; margin-top: 0.5rem;">
+                        優惠期限: {{ promotion.valid_until }}
+                    </p>
+                    {% endif %}
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary" style="margin-top: 1rem;">立即預訂</a>
+                </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- 關於我們 -->
+<section class="services" style="background-color: var(--light-gray);">
+    <div class="container">
+        <h2 class="section-title">為什麼選擇 Pack&Go？</h2>
+        <div class="services-grid">
+            <div class="service-card">
+                <div class="service-icon">👥</div>
+                <h3>專業團隊</h3>
+                <p>擁有豐富經驗的旅遊專家，為您提供最專業的服務與建議。</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">💰</div>
+                <h3>優惠價格</h3>
+                <p>與各大航空公司、飯店合作，提供最具競爭力的價格。</p>
+            </div>
+            <div class="service-card">
+                <div class="service-icon">🛡️</div>
+                <h3>安全保障</h3>
+                <p>完整的旅遊保險與24小時客服支援，讓您旅行無憂。</p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

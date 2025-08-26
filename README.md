@@ -1,86 +1,100 @@
-# 📝 Flask Blog Generator
+# Pack&Go 旅行社官方網站
 
-This is a simple web-based **blog paragraph generator** built with **Flask** and the **OpenAI GPT-3.5 API**.  
-Just enter a topic, and the AI will generate a paragraph about it, displayed instantly on a clean web interface.
+這是為 Pack&Go 旅行社創建的完整官方網站，包含前端展示頁面和管理員後台系統。
 
-## 🚀 Features
+## 功能特色
 
-- ✅ Enter a topic and get an AI-generated paragraph
-- ✅ Uses OpenAI GPT-3.5 Turbo model
-- ✅ Clean and responsive web UI with HTML/CSS
-- ✅ Built with Flask for easy Python backend
-- ✅ API key is safely managed with dotenv
+### 前端功能
+- **響應式設計**: 黑白基調的現代化設計，適配各種設備
+- **專業Logo**: 與名片設計相符的 Pack&Go 品牌標識
+- **服務展示**: 完整展示六大服務項目
+  - 包團旅遊
+  - 客製旅遊
+  - 郵輪
+  - 機票
+  - 飯店
+  - 中國簽證
+- **聯絡頁面**: 完整的聯絡資訊和線上諮詢表單
 
-## 🔧 Installation & Setup
+### 後台管理功能
+- **旅行行程管理**: 新增、編輯、刪除旅行行程
+- **優惠活動管理**: 新增、編輯、刪除優惠活動
+- **直觀介面**: 簡潔易用的管理界面
+- **即時更新**: 所有更改即時生效
 
-### 1️⃣ Clone the repository
+## 技術架構
 
+- **前端框架**: React 18
+- **路由管理**: React Router DOM
+- **圖標庫**: Lucide React
+- **樣式設計**: 純 CSS（黑白基調設計）
+- **響應式布局**: CSS Grid 和 Flexbox
+
+## 安裝與運行
+
+### 安裝依賴
 ```bash
-git clone https://github.com/your-username/flask-blog-generator.git
-cd flask-blog-generator
+npm install
+```
 
-2️⃣ Install dependencies
+### 啟動開發服務器
+```bash
+npm start
+```
 
-pip install -r requirements.txt
+網站將在 `http://localhost:3000` 上運行。
 
-Or manually:
+### 建構生產版本
+```bash
+npm run build
+```
 
-pip install flask openai python-dotenv
+## 頁面結構
 
-3️⃣ Add your OpenAI API key
+```
+/                   - 首頁
+/services          - 服務項目頁面
+/about            - 關於我們
+/contact          - 聯絡我們
+/admin            - 管理員後台（旅行行程和優惠管理）
+```
 
-Create a file named api_key.env (or .env) in the root directory with the following content:
+## 管理員後台使用說明
 
-API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+訪問 `/admin` 進入管理員後台，您可以：
 
-⚠️ Important: Do not share this file or commit it to GitHub.
+### 旅行行程管理
+1. 點擊「新增行程」添加新的旅行產品
+2. 填寫行程名稱、目的地、天數、價格等資訊
+3. 使用編輯按鈕修改現有行程
+4. 使用刪除按鈕移除不需要的行程
 
-4️⃣ Start the Flask server
+### 優惠活動管理
+1. 點擊「新增優惠」創建新的促銷活動
+2. 設定活動名稱、描述、折扣和有效期限
+3. 管理活動狀態（進行中/暫停/已結束）
+4. 編輯或刪除現有優惠活動
 
-python app.py
+## 設計特色
 
-Visit http://127.0.0.1:5000 in your browser.
+- **黑白基調**: 專業簡潔的黑白配色方案
+- **現代化UI**: 乾淨的界面設計和流暢的動畫效果
+- **響應式設計**: 完美適配桌面、平板和手機
+- **用戶體驗**: 直觀的導航和清晰的資訊架構
 
-🖼 Example Output
+## 自定義修改
 
-Input:
+如需修改網站內容或樣式：
 
-Topic: Travel
+1. **修改公司資訊**: 編輯 `src/components/Footer.js` 中的聯絡資訊
+2. **調整顏色**: 修改 `src/index.css` 中的 CSS 變數
+3. **更新服務內容**: 編輯 `src/pages/Home.js` 和 `src/pages/Services.js`
+4. **Logo調整**: 修改 `src/components/Logo.js` 中的 SVG 圖形
 
-Output:
+## 支援
 
-Travel opens the door to new experiences, cultures, and connections. It broadens our perspectives and reminds us how diverse and beautiful the world truly is...
+如有任何問題或需要技術支援，請聯絡開發團隊。
 
-📁 Project Structure
+---
 
-flask-blog-generator/
-├── app.py               # Main Flask application
-├── api_key.env          # 🔐 Your OpenAI API key (should be ignored by Git)
-├── .gitignore           # Files/folders not to be tracked by Git
-├── requirements.txt     # Python dependencies
-└── templates/
-    └── index.html       # Front-end web interface
-
-
-📌 .gitignore (Recommended)
-
-Prevent sensitive files like your API key from being pushed to GitHub:
-
-__pycache__/
-api_key.env
-.env
-*.pyc
-
-
-💡 To Do / Ideas for Improvement
-	•	Add copy-to-clipboard button ✂️
-	•	Export generated text to .txt file
-	•	Support multi-paragraph blog posts
-	•	Add themes (e.g. Dark Mode 🌙)
-	•	Add language selection dropdown
-
-
-🛠 Built With
-	•	Flask
-	•	OpenAI API
-	•	Python-dotenv
+**Pack&Go 旅行社** - 打包你的夢想，出發去探索世界！

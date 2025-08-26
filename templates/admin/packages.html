@@ -1,0 +1,123 @@
+{% extends "admin/base.html" %}
+
+{% block title %}旅遊套裝管理 - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1>旅遊套裝管理</h1>
+    <p>管理所有的旅遊套裝行程</p>
+</div>
+
+<!-- 操作按鈕 -->
+<div style="margin-bottom: 2rem;">
+    <a href="{{ url_for('admin_add_package') }}" class="btn btn-primary">新增旅遊套裝</a>
+</div>
+
+<!-- 套裝列表 -->
+{% if travel_packages %}
+<div class="service-card">
+    <div style="overflow-x: auto;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>套裝名稱</th>
+                    <th>價格</th>
+                    <th>天數</th>
+                    <th>服務類型</th>
+                    <th>建立時間</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in travel_packages %}
+                <tr>
+                    <td>{{ package.id }}</td>
+                    <td>
+                        <strong>{{ package.title }}</strong><br>
+                        <small style="color: var(--medium-gray);">
+                            {{ package.description[:50] }}{% if package.description|length > 50 %}...{% endif %}
+                        </small>
+                    </td>
+                    <td>NT$ {{ package.price }}</td>
+                    <td>{{ package.duration }}</td>
+                    <td>
+                        <span style="padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.8rem; background-color: var(--light-gray);">
+                            {% if package.service_type == 'group-tour' %}包團旅遊
+                            {% elif package.service_type == 'custom-tour' %}客製旅遊
+                            {% elif package.service_type == 'cruise' %}郵輪服務
+                            {% elif package.service_type == 'flight' %}機票服務
+                            {% elif package.service_type == 'hotel' %}飯店住宿
+                            {% elif package.service_type == 'visa' %}簽證服務
+                            {% else %}其他
+                            {% endif %}
+                        </span>
+                    </td>
+                    <td>{{ package.created_at[:10] if package.created_at else '未知' }}</td>
+                    <td>
+                        <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                            <a href="{{ url_for('admin_edit_package', package_id=package.id) }}" 
+                               class="btn btn-secondary" style="font-size: 0.8rem; padding: 0.3rem 0.8rem;">
+                                編輯
+                            </a>
+                            <form method="POST" action="{{ url_for('admin_delete_package', package_id=package.id) }}" 
+                                  style="display: inline;" 
+                                  onsubmit="return confirm('確定要刪除這個旅遊套裝嗎？')">
+                                <button type="submit" class="btn" 
+                                        style="font-size: 0.8rem; padding: 0.3rem 0.8rem; background-color: #dc3545; color: white; border-color: #dc3545;">
+                                    刪除
+                                </button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+<!-- 統計資訊 -->
+<div style="margin-top: 2rem;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+        <div class="service-card" style="text-align: center;">
+            <h4>總套裝數</h4>
+            <div style="font-size: 2rem; font-weight: bold; color: var(--primary-black);">
+                {{ travel_packages|length }}
+            </div>
+        </div>
+        
+        <div class="service-card" style="text-align: center;">
+            <h4>包團旅遊</h4>
+            <div style="font-size: 2rem; font-weight: bold; color: var(--primary-black);">
+                {{ travel_packages|selectattr('service_type', 'equalto', 'group-tour')|list|length }}
+            </div>
+        </div>
+        
+        <div class="service-card" style="text-align: center;">
+            <h4>客製旅遊</h4>
+            <div style="font-size: 2rem; font-weight: bold; color: var(--primary-black);">
+                {{ travel_packages|selectattr('service_type', 'equalto', 'custom-tour')|list|length }}
+            </div>
+        </div>
+        
+        <div class="service-card" style="text-align: center;">
+            <h4>郵輪服務</h4>
+            <div style="font-size: 2rem; font-weight: bold; color: var(--primary-black);">
+                {{ travel_packages|selectattr('service_type', 'equalto', 'cruise')|list|length }}
+            </div>
+        </div>
+    </div>
+</div>
+
+{% else %}
+<div class="service-card" style="text-align: center; padding: 3rem;">
+    <div class="service-icon" style="background-color: var(--medium-gray);">📦</div>
+    <h3>尚無旅遊套裝</h3>
+    <p style="color: var(--medium-gray); margin: 1rem 0;">
+        開始新增您的第一個旅遊套裝吧！
+    </p>
+    <a href="{{ url_for('admin_add_package') }}" class="btn btn-primary">新增旅遊套裝</a>
+</div>
+{% endif %}
+{% endblock %}
