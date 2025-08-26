@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pack&Go 旅行社{% endblock %}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-black: #000000;
+            --secondary-black: #1a1a1a;
+            --light-gray: #f8f9fa;
+            --medium-gray: #6c757d;
+            --white: #ffffff;
+            --accent-gray: #e9ecef;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            color: var(--primary-black);
+            background-color: var(--white);
+        }
+
+        .navbar {
+            background-color: var(--primary-black) !important;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar-brand {
+            color: var(--white) !important;
+            font-weight: bold;
+            font-size: 1.5rem;
+        }
+
+        .navbar-nav .nav-link {
+            color: var(--white) !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .navbar-nav .nav-link:hover {
+            color: var(--accent-gray) !important;
+        }
+
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-black) 0%, var(--secondary-black) 100%);
+            color: var(--white);
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="white" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="white" opacity="0.1"/><circle cx="50" cy="10" r="0.5" fill="white" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>');
+            opacity: 0.3;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-black);
+            border-color: var(--primary-black);
+            color: var(--white);
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--secondary-black);
+            border-color: var(--secondary-black);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-outline-primary {
+            border-color: var(--primary-black);
+            color: var(--primary-black);
+            font-weight: 600;
+            padding: 12px 30px;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--primary-black);
+            border-color: var(--primary-black);
+            color: var(--white);
+            transform: translateY(-2px);
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .section-title {
+            color: var(--primary-black);
+            font-weight: bold;
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--primary-black);
+        }
+
+        .footer {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 50px 0 20px;
+        }
+
+        .footer h5 {
+            color: var(--white);
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .footer a {
+            color: var(--accent-gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer a:hover {
+            color: var(--white);
+        }
+
+        .alert {
+            border-radius: 10px;
+            border: none;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: bold;
+            color: var(--white);
+            text-decoration: none;
+        }
+
+        .logo:hover {
+            color: var(--accent-gray);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-black);
+            margin-bottom: 1rem;
+        }
+
+        .price-tag {
+            background-color: var(--primary-black);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        .promotion-badge {
+            background-color: #dc3545;
+            color: var(--white);
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 60px 0;
+            }
+            
+            .navbar-brand {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+    {% block extra_css %}{% endblock %}
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+        <div class="container">
+            <a class="navbar-brand logo" href="{{ url_for('index') }}">
+                <i class="fas fa-plane"></i> Pack&Go
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('index') }}">首頁</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('services') }}">服務項目</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('tours') }}">旅遊行程</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('promotions') }}">優惠活動</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('about') }}">關於我們</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('contact') }}">聯絡我們</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main style="margin-top: 76px;">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container mt-3">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'success' if category == 'success' else 'error' }} alert-dismissible fade show" role="alert">
+                            {{ message }}
+                            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="footer mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5><i class="fas fa-plane"></i> Pack&Go 旅行社</h5>
+                    <p>專業的旅遊服務，為您打造完美的旅行體驗。從包團旅遊到客製行程，從郵輪到機票飯店，我們提供全方位的旅遊解決方案。</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>服務項目</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="{{ url_for('tours') }}?category=包團旅遊">包團旅遊</a></li>
+                        <li><a href="{{ url_for('tours') }}?category=客製旅遊">客製旅遊</a></li>
+                        <li><a href="{{ url_for('tours') }}?category=郵輪">郵輪旅遊</a></li>
+                        <li><a href="{{ url_for('services') }}">機票訂購</a></li>
+                        <li><a href="{{ url_for('services') }}">飯店預訂</a></li>
+                        <li><a href="{{ url_for('services') }}">中國簽證</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>聯絡資訊</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="fas fa-phone"></i> 電話：(02) 1234-5678</li>
+                        <li><i class="fas fa-envelope"></i> 信箱：info@packandgo.com</li>
+                        <li><i class="fas fa-map-marker-alt"></i> 地址：台北市信義區信義路五段7號</li>
+                        <li><i class="fas fa-clock"></i> 營業時間：週一至週五 9:00-18:00</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: var(--medium-gray);">
+            <div class="row">
+                <div class="col-md-6">
+                    <p>&copy; 2024 Pack&Go 旅行社. 版權所有.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <a href="#" class="me-3"><i class="fab fa-facebook"></i></a>
+                    <a href="#" class="me-3"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="me-3"><i class="fab fa-line"></i></a>
+                    <a href="#"><i class="fab fa-wechat"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>

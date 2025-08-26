@@ -1,0 +1,197 @@
+{% extends "base.html" %}
+
+{% block title %}優惠活動 - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<!-- 頁面標題 -->
+<section class="py-5" style="background-color: var(--light-gray);">
+    <div class="container">
+        <div class="text-center">
+            <h1 class="section-title">限時優惠活動</h1>
+            <p class="lead">把握機會，享受最優惠的價格</p>
+        </div>
+    </div>
+</section>
+
+<!-- 優惠活動列表 -->
+<section class="py-5">
+    <div class="container">
+        {% if promotions %}
+        <div class="row g-4">
+            {% for promotion in promotions %}
+            <div class="col-lg-6 col-md-12">
+                <div class="card h-100 border-danger shadow">
+                    <div class="card-header bg-danger text-white">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">{{ promotion.title }}</h5>
+                            <span class="badge bg-light text-danger fs-6">{{ promotion.discount_percentage }}% OFF</span>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text">{{ promotion.description }}</p>
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-calendar-alt"></i> 優惠期限
+                                </small>
+                                <div class="fw-bold">{{ promotion.valid_until.strftime('%Y年%m月%d日') }}</div>
+                            </div>
+                            <div class="col-6">
+                                <small class="text-muted">
+                                    <i class="fas fa-clock"></i> 建立時間
+                                </small>
+                                <div class="fw-bold">{{ promotion.created_at.strftime('%Y-%m-%d') }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <div class="d-grid gap-2">
+                            <a href="{{ url_for('contact') }}?promotion={{ promotion.id }}" class="btn btn-danger">
+                                <i class="fas fa-gift"></i> 立即搶購
+                            </a>
+                            <a href="{{ url_for('tours') }}" class="btn btn-outline-danger">
+                                <i class="fas fa-search"></i> 查看相關行程
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+        <div class="text-center py-5">
+            <i class="fas fa-gift" style="font-size: 4rem; color: var(--medium-gray); margin-bottom: 1rem;"></i>
+            <h3>目前沒有優惠活動</h3>
+            <p class="text-muted">我們正在準備更多精彩的優惠活動，敬請期待！</p>
+            <a href="{{ url_for('tours') }}" class="btn btn-primary me-3">
+                <i class="fas fa-search"></i> 瀏覽行程
+            </a>
+            <a href="{{ url_for('contact') }}" class="btn btn-outline-primary">
+                <i class="fas fa-envelope"></i> 聯絡我們
+            </a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- 優惠說明 -->
+<section class="py-5" style="background-color: var(--light-gray);">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">優惠活動說明</h2>
+            <p class="text-muted">了解我們的優惠政策和使用方式</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-calendar-check service-icon"></i>
+                        <h5>限時優惠</h5>
+                        <p class="text-muted">所有優惠活動都有明確的有效期限，請把握時間搶購</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-users service-icon"></i>
+                        <h5>適用對象</h5>
+                        <p class="text-muted">優惠活動適用於所有客戶，部分活動可能有特定條件</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card h-100 border-0 shadow-sm">
+                    <div class="card-body text-center p-4">
+                        <i class="fas fa-handshake service-icon"></i>
+                        <h5>不可合併</h5>
+                        <p class="text-muted">優惠活動不可與其他折扣同時使用，以最優惠方案為準</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 如何獲得優惠 -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">如何獲得優惠</h2>
+            <p class="text-muted">簡單步驟，輕鬆享受優惠</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-3 text-center">
+                <div class="position-relative">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; font-weight: bold;">1</div>
+                    <h5 class="mt-3">瀏覽優惠</h5>
+                    <p class="text-muted">查看最新的優惠活動</p>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="position-relative">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; font-weight: bold;">2</div>
+                    <h5 class="mt-3">選擇行程</h5>
+                    <p class="text-muted">選擇您喜歡的旅遊行程</p>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="position-relative">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; font-weight: bold;">3</div>
+                    <h5 class="mt-3">聯絡我們</h5>
+                    <p class="text-muted">聯絡我們的旅遊顧問</p>
+                </div>
+            </div>
+            <div class="col-md-3 text-center">
+                <div class="position-relative">
+                    <div class="bg-danger text-white rounded-circle d-inline-flex align-items-center justify-content-center" style="width: 60px; height: 60px; font-size: 1.5rem; font-weight: bold;">4</div>
+                    <h5 class="mt-3">享受優惠</h5>
+                    <p class="text-muted">完成預訂享受優惠價格</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 聯絡我們 -->
+<section class="py-5" style="background-color: var(--light-gray);">
+    <div class="container">
+        <div class="text-center">
+            <h2 class="section-title">對優惠活動有疑問？</h2>
+            <p class="lead mb-4">我們的專業旅遊顧問隨時為您解答</p>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="row g-3 mb-4">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fas fa-phone text-primary me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-0">電話諮詢</h6>
+                                    <small class="text-muted">(02) 1234-5678</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center justify-content-center">
+                                <i class="fas fa-envelope text-primary me-3" style="font-size: 1.5rem;"></i>
+                                <div>
+                                    <h6 class="mb-0">線上諮詢</h6>
+                                    <small class="text-muted">info@packandgo.com</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary me-3">
+                        <i class="fas fa-envelope"></i> 立即諮詢
+                    </a>
+                    <a href="{{ url_for('tours') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-search"></i> 瀏覽行程
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

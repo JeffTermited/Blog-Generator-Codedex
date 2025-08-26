@@ -1,86 +1,136 @@
-# 📝 Flask Blog Generator
+# Pack&Go 旅行社網站
 
-This is a simple web-based **blog paragraph generator** built with **Flask** and the **OpenAI GPT-3.5 API**.  
-Just enter a topic, and the AI will generate a paragraph about it, displayed instantly on a clean web interface.
+一個專業的旅行社網站，提供包團旅遊、客製旅遊、郵輪、機票、飯店預訂和中國簽證等服務。
 
-## 🚀 Features
+## 功能特色
 
-- ✅ Enter a topic and get an AI-generated paragraph
-- ✅ Uses OpenAI GPT-3.5 Turbo model
-- ✅ Clean and responsive web UI with HTML/CSS
-- ✅ Built with Flask for easy Python backend
-- ✅ API key is safely managed with dotenv
+### 前台功能
+- 🏠 **首頁** - 展示特色服務和熱門行程
+- 🎯 **服務項目** - 詳細介紹各項旅遊服務
+- 🗺️ **旅遊行程** - 瀏覽所有旅遊行程，支援分類篩選
+- 🎉 **優惠活動** - 查看最新優惠和特價活動
+- 📞 **聯絡我們** - 客戶諮詢表單
+- ℹ️ **關於我們** - 公司介紹和服務特色
 
-## 🔧 Installation & Setup
+### 後台管理功能
+- 📊 **管理員儀表板** - 統計數據和快速操作
+- 🗺️ **旅遊行程管理** - 新增、編輯、刪除旅遊行程
+- 🎉 **優惠活動管理** - 管理促銷活動和折扣
+- 📧 **聯絡訊息管理** - 查看客戶諮詢訊息
 
-### 1️⃣ Clone the repository
+## 技術架構
 
+- **後端框架**: Flask (Python)
+- **資料庫**: SQLite
+- **前端框架**: Bootstrap 5
+- **圖示**: Font Awesome
+- **樣式**: 黑白基調的現代化設計
+
+## 安裝與運行
+
+### 1. 安裝依賴
 ```bash
-git clone https://github.com/your-username/flask-blog-generator.git
-cd flask-blog-generator
-
-2️⃣ Install dependencies
-
 pip install -r requirements.txt
+```
 
-Or manually:
-
-pip install flask openai python-dotenv
-
-3️⃣ Add your OpenAI API key
-
-Create a file named api_key.env (or .env) in the root directory with the following content:
-
-API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-⚠️ Important: Do not share this file or commit it to GitHub.
-
-4️⃣ Start the Flask server
-
+### 2. 運行應用程式
+```bash
 python app.py
+```
 
-Visit http://127.0.0.1:5000 in your browser.
+### 3. 訪問網站
+- 前台網站: http://localhost:5000
+- 後台管理: http://localhost:5000/admin/login
 
-🖼 Example Output
+## 管理員帳號
 
-Input:
+預設管理員帳號：
+- **帳號**: admin
+- **密碼**: admin123
 
-Topic: Travel
+**重要**: 首次登入後請立即修改密碼！
 
-Output:
+## 網站結構
 
-Travel opens the door to new experiences, cultures, and connections. It broadens our perspectives and reminds us how diverse and beautiful the world truly is...
+```
+packandgo/
+├── app.py                 # Flask主應用程式
+├── requirements.txt       # Python依賴
+├── README.md             # 說明文件
+├── templates/            # HTML模板
+│   ├── base.html         # 基礎模板
+│   ├── index.html        # 首頁
+│   ├── services.html     # 服務項目頁面
+│   ├── tours.html        # 旅遊行程頁面
+│   ├── promotions.html   # 優惠活動頁面
+│   ├── about.html        # 關於我們頁面
+│   ├── contact.html      # 聯絡我們頁面
+│   └── admin/            # 後台管理模板
+│       ├── login.html    # 管理員登入
+│       ├── dashboard.html # 管理員儀表板
+│       ├── tours.html    # 行程管理
+│       ├── add_tour.html # 新增行程
+│       ├── edit_tour.html # 編輯行程
+│       ├── promotions.html # 優惠管理
+│       ├── add_promotion.html # 新增優惠
+│       ├── edit_promotion.html # 編輯優惠
+│       └── contacts.html # 聯絡訊息管理
+└── packandgo.db          # SQLite資料庫
+```
 
-📁 Project Structure
+## 服務項目
 
-flask-blog-generator/
-├── app.py               # Main Flask application
-├── api_key.env          # 🔐 Your OpenAI API key (should be ignored by Git)
-├── .gitignore           # Files/folders not to be tracked by Git
-├── requirements.txt     # Python dependencies
-└── templates/
-    └── index.html       # Front-end web interface
+### 1. 包團旅遊
+- 精心規劃的團體旅遊行程
+- 專業導遊服務
+- 適合親友同遊
 
+### 2. 客製旅遊
+- 根據需求量身打造
+- 個人化行程規劃
+- 彈性安排
 
-📌 .gitignore (Recommended)
+### 3. 郵輪旅遊
+- 豪華郵輪體驗
+- 海上五星級服務
+- 探索世界港口
 
-Prevent sensitive files like your API key from being pushed to GitHub:
+### 4. 機票訂購
+- 全球航空公司機票
+- 最優惠價格
+- 便捷訂票服務
 
-__pycache__/
-api_key.env
-.env
-*.pyc
+### 5. 飯店預訂
+- 經濟型到豪華五星級
+- 適合的住宿選擇
+- 全球飯店網路
 
+### 6. 中國簽證
+- 專業代辦服務
+- 輕鬆取得入境許可
+- 暢遊神州大地
 
-💡 To Do / Ideas for Improvement
-	•	Add copy-to-clipboard button ✂️
-	•	Export generated text to .txt file
-	•	Support multi-paragraph blog posts
-	•	Add themes (e.g. Dark Mode 🌙)
-	•	Add language selection dropdown
+## 設計特色
 
+- **黑白基調**: 專業簡潔的設計風格
+- **響應式設計**: 支援各種裝置瀏覽
+- **現代化UI**: 使用Bootstrap 5框架
+- **使用者友善**: 直觀的操作介面
+- **專業形象**: 符合旅行社品牌形象
 
-🛠 Built With
-	•	Flask
-	•	OpenAI API
-	•	Python-dotenv
+## 聯絡資訊
+
+- **電話**: (02) 1234-5678
+- **信箱**: info@packandgo.com
+- **地址**: 台北市信義區信義路五段7號
+- **營業時間**: 週一至週五 9:00-18:00
+
+## 版本資訊
+
+- **版本**: v1.0
+- **更新日期**: 2024年
+- **開發者**: Pack&Go 旅行社
+
+---
+
+© 2024 Pack&Go 旅行社. 版權所有.
