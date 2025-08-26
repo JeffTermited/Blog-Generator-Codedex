@@ -1,48 +1,261 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Blog Generator 📝</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      background-color: #f8f9fa;
-    }
-    h1 {
-      color: #343a40;
-    }
-    textarea {
-      width: 100%;
-      height: 200px;
-      margin-top: 1rem;
-      font-size: 16px;
-    }
-    input[type="text"] {
-      width: 300px;
-      padding: 0.5rem;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      background-color: #198754;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-left: 0.5rem;
-    }
-  </style>
-</head>
-<body>
-  <h1>📝 Blog Generator</h1>
-  <form method="post">
-    <label for="topic">Enter your blog topic:</label>
-    <input type="text" id="topic" name="topic" required>
-    <button type="submit">Generate</button>
-  </form>
+{% extends "base.html" %}
 
-  {% if blog_text %}
-    <h2>🪐 Topic: {{ topic }}</h2>
-    <textarea readonly>{{ blog_text }}</textarea>
-  {% endif %}
-</body>
-</html>
+{% block title %}Pack&Go 旅行社 - 專業旅遊服務{% endblock %}
+
+{% block content %}
+<!-- 英雄區塊 -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="display-4 fw-bold mb-4">探索世界的美好</h1>
+                <p class="lead mb-4">Pack&Go 為您提供專業的旅遊服務，從包團旅遊到客製行程，從郵輪到機票飯店，讓每一次旅行都成為難忘的回憶。</p>
+                <div class="d-flex gap-3">
+                    <a href="{{ url_for('tours') }}" class="btn btn-primary">
+                        <i class="fas fa-search"></i> 探索行程
+                    </a>
+                    <a href="{{ url_for('contact') }}" class="btn btn-outline-light">
+                        <i class="fas fa-phone"></i> 立即諮詢
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="fas fa-plane-departure" style="font-size: 8rem; opacity: 0.8;"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 特色服務 -->
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">我們的服務</h2>
+            <p class="text-muted">專業的旅遊規劃，為您打造完美的旅行體驗</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="fas fa-users service-icon"></i>
+                        <h5 class="card-title">包團旅遊</h5>
+                        <p class="card-text">精心規劃的團體旅遊行程，讓您與親友共享美好時光，享受專業導遊的貼心服務。</p>
+                        <a href="{{ url_for('tours') }}?category=包團旅遊" class="btn btn-outline-primary">了解更多</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="fas fa-map-marked-alt service-icon"></i>
+                        <h5 class="card-title">客製旅遊</h5>
+                        <p class="card-text">根據您的需求量身打造專屬行程，讓每一次旅行都符合您的期待與夢想。</p>
+                        <a href="{{ url_for('tours') }}?category=客製旅遊" class="btn btn-outline-primary">了解更多</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="fas fa-ship service-icon"></i>
+                        <h5 class="card-title">郵輪旅遊</h5>
+                        <p class="card-text">豪華郵輪體驗，在海上享受五星級服務，探索世界各地的美麗港口。</p>
+                        <a href="{{ url_for('tours') }}?category=郵輪" class="btn btn-outline-primary">了解更多</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="fas fa-plane service-icon"></i>
+                        <h5 class="card-title">機票訂購</h5>
+                        <p class="card-text">全球各大航空公司機票，提供最優惠的價格和最便捷的訂票服務。</p>
+                        <a href="{{ url_for('services') }}" class="btn btn-outline-primary">了解更多</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="fas fa-hotel service-icon"></i>
+                        <h5 class="card-title">飯店預訂</h5>
+                        <p class="card-text">從經濟型到豪華五星級飯店，為您找到最適合的住宿選擇。</p>
+                        <a href="{{ url_for('services') }}" class="btn btn-outline-primary">了解更多</a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-4">
+                <div class="card h-100 text-center p-4">
+                    <div class="card-body">
+                        <i class="fas fa-passport service-icon"></i>
+                        <h5 class="card-title">中國簽證</h5>
+                        <p class="card-text">專業的中國簽證代辦服務，讓您輕鬆取得入境許可，暢遊神州大地。</p>
+                        <a href="{{ url_for('services') }}" class="btn btn-outline-primary">了解更多</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 推薦行程 -->
+{% if featured_tours %}
+<section class="py-5" style="background-color: var(--light-gray);">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">熱門推薦</h2>
+            <p class="text-muted">精選熱門旅遊行程，帶您探索世界的美好</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for tour in featured_tours %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100">
+                    {% if tour.image_url %}
+                    <img src="{{ tour.image_url }}" class="card-img-top" alt="{{ tour.title }}" style="height: 200px; object-fit: cover;">
+                    {% else %}
+                    <div class="card-img-top bg-secondary d-flex align-items-center justify-content-center" style="height: 200px;">
+                        <i class="fas fa-image text-white" style="font-size: 3rem;"></i>
+                    </div>
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ tour.title }}</h5>
+                        <p class="card-text">{{ tour.description[:100] }}{% if tour.description|length > 100 %}...{% endif %}</p>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="price-tag">NT$ {{ "{:,.0f}".format(tour.price) }}</span>
+                            <small class="text-muted">{{ tour.duration }}</small>
+                        </div>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{{ url_for('tours') }}" class="btn btn-primary w-100">查看詳情</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('tours') }}" class="btn btn-outline-primary">查看所有行程</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- 優惠活動 -->
+{% if promotions %}
+<section class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">限時優惠</h2>
+            <p class="text-muted">把握機會，享受最優惠的價格</p>
+        </div>
+        
+        <div class="row g-4">
+            {% for promotion in promotions %}
+            <div class="col-lg-4 col-md-6">
+                <div class="card h-100 border-danger">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-start mb-3">
+                            <h5 class="card-title">{{ promotion.title }}</h5>
+                            <span class="promotion-badge">{{ promotion.discount_percentage }}% OFF</span>
+                        </div>
+                        <p class="card-text">{{ promotion.description }}</p>
+                        <small class="text-muted">優惠期限：{{ promotion.valid_until.strftime('%Y-%m-%d') }}</small>
+                    </div>
+                    <div class="card-footer bg-transparent border-0">
+                        <a href="{{ url_for('promotions') }}" class="btn btn-danger w-100">立即搶購</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        
+        <div class="text-center mt-4">
+            <a href="{{ url_for('promotions') }}" class="btn btn-outline-primary">查看所有優惠</a>
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- 為什麼選擇我們 -->
+<section class="py-5" style="background-color: var(--light-gray);">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="section-title">為什麼選擇 Pack&Go</h2>
+            <p class="text-muted">專業、可靠、貼心的旅遊服務</p>
+        </div>
+        
+        <div class="row g-4">
+            <div class="col-md-3 text-center">
+                <i class="fas fa-award service-icon"></i>
+                <h5>專業認證</h5>
+                <p class="text-muted">擁有專業旅遊執照，提供合法安全的旅遊服務</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <i class="fas fa-clock service-icon"></i>
+                <h5>24小時服務</h5>
+                <p class="text-muted">全天候客服支援，隨時為您解決旅遊問題</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <i class="fas fa-shield-alt service-icon"></i>
+                <h5>安全保障</h5>
+                <p class="text-muted">完善的旅遊保險，讓您安心出遊無後顧之憂</p>
+            </div>
+            <div class="col-md-3 text-center">
+                <i class="fas fa-heart service-icon"></i>
+                <h5>貼心服務</h5>
+                <p class="text-muted">細心規劃每個細節，讓您的旅程更加完美</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 聯絡我們 -->
+<section class="py-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="section-title">準備好開始您的旅程了嗎？</h2>
+                <p class="lead mb-4">聯絡我們的專業旅遊顧問，為您規劃完美的旅行體驗。</p>
+                <div class="row g-3">
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-phone text-primary me-3" style="font-size: 1.5rem;"></i>
+                            <div>
+                                <h6 class="mb-0">電話諮詢</h6>
+                                <small class="text-muted">(02) 1234-5678</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="d-flex align-items-center">
+                            <i class="fas fa-envelope text-primary me-3" style="font-size: 1.5rem;"></i>
+                            <div>
+                                <h6 class="mb-0">線上諮詢</h6>
+                                <small class="text-muted">info@packandgo.com</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary me-3">
+                        <i class="fas fa-envelope"></i> 立即諮詢
+                    </a>
+                    <a href="{{ url_for('tours') }}" class="btn btn-outline-primary">
+                        <i class="fas fa-search"></i> 瀏覽行程
+                    </a>
+                </div>
+            </div>
+            <div class="col-lg-6 text-center">
+                <i class="fas fa-globe-americas" style="font-size: 8rem; color: var(--primary-black); opacity: 0.1;"></i>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
