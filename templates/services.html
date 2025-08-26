@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>服務項目 - Pack&Go</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -13,20 +14,22 @@
         }
 
         body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Inter', sans-serif;
             line-height: 1.6;
-            color: #333;
-            background-color: #fff;
+            color: #1a1a1a;
+            background-color: #ffffff;
         }
 
+        /* 導航欄 */
         .navbar {
-            background-color: #000;
+            background-color: rgba(0, 0, 0, 0.95);
             padding: 1rem 0;
             position: fixed;
             width: 100%;
             top: 0;
             z-index: 1000;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
         }
 
         .nav-container {
@@ -39,30 +42,54 @@
         }
 
         .logo {
-            color: #fff;
-            font-size: 1.8rem;
-            font-weight: bold;
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: 700;
             text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #f0f0f0;
+            font-weight: 300;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 2rem;
+            gap: 2.5rem;
         }
 
         .nav-links a {
-            color: #fff;
+            color: #ffffff;
             text-decoration: none;
-            transition: color 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
         }
 
         .nav-links a:hover {
-            color: #ccc;
+            color: #f0f0f0;
         }
 
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #ffffff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 頁面標題 */
         .page-header {
-            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
             background-size: cover;
             background-position: center;
             height: 400px;
@@ -70,15 +97,24 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            color: #fff;
+            color: #ffffff;
             margin-top: 80px;
         }
 
         .page-title {
             font-size: 3rem;
+            font-weight: 700;
             margin-bottom: 1rem;
+            letter-spacing: -1px;
         }
 
+        .page-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* 主要內容 */
         .container {
             max-width: 1200px;
             margin: 0 auto;
@@ -89,93 +125,214 @@
             padding: 5rem 0;
         }
 
-        .service-item {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 4rem;
-            align-items: center;
-            margin-bottom: 5rem;
-        }
-
-        .service-item:nth-child(even) {
-            direction: rtl;
-        }
-
-        .service-item:nth-child(even) .service-content {
-            direction: ltr;
-        }
-
-        .service-image {
-            height: 400px;
-            background-size: cover;
-            background-position: center;
-            border-radius: 10px;
-        }
-
-        .service-content h2 {
+        .section-title {
+            text-align: center;
             font-size: 2.5rem;
+            font-weight: 700;
             margin-bottom: 1rem;
-            color: #000;
+            color: #1a1a1a;
         }
 
-        .service-content p {
-            font-size: 1.1rem;
-            margin-bottom: 2rem;
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
             color: #666;
+            margin-bottom: 4rem;
+            font-weight: 300;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .service-item {
+            background: #ffffff;
+            border-radius: 16px;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #000000, #333333);
+        }
+
+        .service-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .service-icon {
+            font-size: 4rem;
+            color: #000000;
+            margin-bottom: 2rem;
+            display: block;
+        }
+
+        .service-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1a1a1a;
+        }
+
+        .service-description {
+            color: #666;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
         }
 
         .service-features {
             list-style: none;
+            text-align: left;
             margin-bottom: 2rem;
         }
 
         .service-features li {
             padding: 0.5rem 0;
-            color: #333;
+            color: #555;
+            position: relative;
+            padding-left: 1.5rem;
         }
 
-        .service-features li:before {
-            content: "✓";
-            color: #000;
+        .service-features li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: #000000;
             font-weight: bold;
-            margin-right: 1rem;
         }
 
-        .cta-button {
-            background-color: #000;
-            color: #fff;
+        .service-cta {
+            background-color: #000000;
+            color: #ffffff;
             padding: 1rem 2rem;
             text-decoration: none;
-            border-radius: 5px;
-            font-weight: bold;
-            transition: all 0.3s;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
             display: inline-block;
+            border: 2px solid #000000;
         }
 
-        .cta-button:hover {
-            background-color: #333;
-            transform: translateY(-2px);
+        .service-cta:hover {
+            background-color: transparent;
+            color: #000000;
         }
 
-        .footer {
-            background-color: #000;
-            color: #fff;
-            padding: 3rem 0;
+        /* 特色服務 */
+        .features-section {
+            padding: 5rem 0;
+            background-color: #f8f9fa;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: #ffffff;
+            padding: 2rem;
+            border-radius: 12px;
             text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
         }
 
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            color: #000000;
+            margin-bottom: 1rem;
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .feature-description {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* 頁腳 */
+        .footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #cccccc;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 1rem;
+            text-align: center;
+            color: #cccccc;
+        }
+
+        /* 響應式設計 */
         @media (max-width: 768px) {
-            .service-item {
-                grid-template-columns: 1fr;
-                gap: 2rem;
-            }
-            
-            .service-item:nth-child(even) {
-                direction: ltr;
-            }
-            
             .page-title {
                 font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .services-grid, .features-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .service-item {
+                padding: 2rem 1.5rem;
             }
         }
     </style>
@@ -184,11 +341,11 @@
     <!-- 導航欄 -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="/" class="logo">Pack&Go</a>
+            <a href="/" class="logo">Pack<span>&Go</span></a>
             <ul class="nav-links">
                 <li><a href="/">首頁</a></li>
-                <li><a href="/services">服務</a></li>
-                <li><a href="/tours">行程</a></li>
+                <li><a href="/services">服務項目</a></li>
+                <li><a href="/tours">旅遊行程</a></li>
                 <li><a href="/contact">聯絡我們</a></li>
             </ul>
         </div>
@@ -197,113 +354,152 @@
     <!-- 頁面標題 -->
     <header class="page-header">
         <div>
-            <h1 class="page-title">我們的服務</h1>
-            <p>專業的旅遊服務，滿足您的各種需求</p>
+            <h1 class="page-title">服務項目</h1>
+            <p class="page-subtitle">專業的旅遊服務，為您打造完美的旅行體驗</p>
         </div>
     </header>
 
-    <!-- 服務內容 -->
+    <!-- 主要服務 -->
     <section class="services-section">
         <div class="container">
-            <!-- 包團旅遊 -->
-            <div class="service-item">
-                <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80')"></div>
-                <div class="service-content">
-                    <h2>包團旅遊</h2>
-                    <p>精心規劃的團體旅遊，讓您與親友共享美好時光。我們提供專業的導遊服務，確保您的旅程安全愉快。</p>
+            <h2 class="section-title">我們的專業服務</h2>
+            <p class="section-subtitle">從規劃到執行，我們提供全方位的旅遊服務</p>
+            
+            <div class="services-grid">
+                <!-- 包團旅遊 -->
+                <div class="service-item">
+                    <i class="fas fa-users service-icon"></i>
+                    <h3 class="service-title">包團旅遊</h3>
+                    <p class="service-description">精心規劃的團體旅遊，讓您與親朋好友一起享受美好的旅行時光。我們提供專業的導遊服務，確保您的旅程安全愉快。</p>
                     <ul class="service-features">
                         <li>專業導遊全程陪同</li>
                         <li>精心規劃行程路線</li>
-                        <li>優質住宿安排</li>
                         <li>團體優惠價格</li>
                         <li>24小時緊急支援</li>
+                        <li>旅遊保險保障</li>
                     </ul>
-                    <a href="/contact" class="cta-button">立即諮詢</a>
+                    <a href="/contact" class="service-cta">立即諮詢</a>
                 </div>
-            </div>
 
-            <!-- 客製旅遊 -->
-            <div class="service-item">
-                <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
-                <div class="service-content">
-                    <h2>客製旅遊</h2>
-                    <p>根據您的需求量身打造專屬行程，無論是蜜月旅行、商務考察還是探險之旅，我們都能為您規劃。</p>
+                <!-- 客製旅遊 -->
+                <div class="service-item">
+                    <i class="fas fa-map-marked-alt service-icon"></i>
+                    <h3 class="service-title">客製旅遊</h3>
+                    <p class="service-description">根據您的需求量身打造專屬行程，創造獨一無二的旅行體驗。無論是蜜月旅行、商務考察還是探險之旅，我們都能為您規劃。</p>
                     <ul class="service-features">
                         <li>個人化行程設計</li>
-                        <li>彈性出發日期</li>
+                        <li>彈性出發時間</li>
                         <li>專屬旅遊顧問</li>
-                        <li>特殊需求安排</li>
-                        <li>全程客製化服務</li>
+                        <li>高級住宿安排</li>
+                        <li>特殊需求處理</li>
                     </ul>
-                    <a href="/contact" class="cta-button">開始規劃</a>
+                    <a href="/contact" class="service-cta">開始規劃</a>
                 </div>
-            </div>
 
-            <!-- 郵輪假期 -->
-            <div class="service-item">
-                <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
-                <div class="service-content">
-                    <h2>郵輪假期</h2>
-                    <p>豪華郵輪體驗，享受海上度假的樂趣。從亞洲到歐洲，從加勒比海到地中海，探索世界各地的美麗港口。</p>
+                <!-- 郵輪假期 -->
+                <div class="service-item">
+                    <i class="fas fa-ship service-icon"></i>
+                    <h3 class="service-title">郵輪假期</h3>
+                    <p class="service-description">豪華郵輪體驗，在海上享受奢華假期，探索不同國度的風情。我們與各大郵輪公司合作，提供最優質的郵輪旅遊服務。</p>
                     <ul class="service-features">
                         <li>全球知名郵輪公司</li>
-                        <li>豪華艙房選擇</li>
-                        <li>豐富船上娛樂</li>
+                        <li>豪華套房選擇</li>
+                        <li>豐富船上活動</li>
                         <li>岸上觀光行程</li>
                         <li>專業郵輪顧問</li>
                     </ul>
-                    <a href="/contact" class="cta-button">查看郵輪</a>
+                    <a href="/contact" class="service-cta">探索郵輪</a>
                 </div>
-            </div>
 
-            <!-- 機票預訂 -->
-            <div class="service-item">
-                <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1436491865332-7a61a109cc05?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80')"></div>
-                <div class="service-content">
-                    <h2>機票預訂</h2>
-                    <p>全球航空公司機票，最優惠的價格。我們與各大航空公司合作，為您提供最適合的航班選擇。</p>
+                <!-- 機票預訂 -->
+                <div class="service-item">
+                    <i class="fas fa-plane service-icon"></i>
+                    <h3 class="service-title">機票預訂</h3>
+                    <p class="service-description">全球各大航空公司機票，為您找到最優惠的價格和最適合的航班。我們提供24小時機票查詢和預訂服務。</p>
                     <ul class="service-features">
                         <li>全球航空公司合作</li>
                         <li>最優惠價格保證</li>
-                        <li>24小時訂票服務</li>
+                        <li>24小時預訂服務</li>
                         <li>機票改期服務</li>
-                        <li>行李託運協助</li>
+                        <li>行李託運諮詢</li>
                     </ul>
-                    <a href="/contact" class="cta-button">查詢機票</a>
+                    <a href="/contact" class="service-cta">查詢機票</a>
                 </div>
-            </div>
 
-            <!-- 飯店住宿 -->
-            <div class="service-item">
-                <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80')"></div>
-                <div class="service-content">
-                    <h2>飯店住宿</h2>
-                    <p>精選全球優質飯店，舒適住宿體驗。從經濟型到豪華型，我們為您推薦最適合的住宿選擇。</p>
+                <!-- 飯店住宿 -->
+                <div class="service-item">
+                    <i class="fas fa-hotel service-icon"></i>
+                    <h3 class="service-title">飯店住宿</h3>
+                    <p class="service-description">精選全球優質飯店，從經濟型到奢華五星級，滿足您的各種需求。我們與全球知名飯店集團合作，確保您的住宿品質。</p>
                     <ul class="service-features">
-                        <li>全球優質飯店合作</li>
+                        <li>全球知名飯店集團</li>
                         <li>多種房型選擇</li>
                         <li>會員優惠價格</li>
                         <li>免費取消政策</li>
-                        <li>24小時客服支援</li>
+                        <li>機場接送服務</li>
                     </ul>
-                    <a href="/contact" class="cta-button">預訂飯店</a>
+                    <a href="/contact" class="service-cta">預訂飯店</a>
+                </div>
+
+                <!-- 中國簽證 -->
+                <div class="service-item">
+                    <i class="fas fa-passport service-icon"></i>
+                    <h3 class="service-title">中國簽證</h3>
+                    <p class="service-description">專業的中國簽證代辦服務，讓您輕鬆辦理各類簽證申請。我們擁有豐富的簽證辦理經驗，確保您的申請順利通過。</p>
+                    <ul class="service-features">
+                        <li>專業簽證顧問</li>
+                        <li>快速辦理服務</li>
+                        <li>文件準備協助</li>
+                        <li>進度追蹤服務</li>
+                        <li>緊急加急服務</li>
+                    </ul>
+                    <a href="/contact" class="service-cta">辦理簽證</a>
                 </div>
             </div>
+        </div>
+    </section>
 
-            <!-- 中國簽證 -->
-            <div class="service-item">
-                <div class="service-image" style="background-image: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2071&q=80')"></div>
-                <div class="service-content">
-                    <h2>中國簽證</h2>
-                    <p>專業簽證代辦服務，快速便捷。我們熟悉各國簽證申請流程，為您提供專業的簽證代辦服務。</p>
-                    <ul class="service-features">
-                        <li>專業簽證代辦</li>
-                        <li>快速處理時間</li>
-                        <li>文件準備協助</li>
-                        <li>申請進度追蹤</li>
-                        <li>簽證諮詢服務</li>
-                    </ul>
-                    <a href="/contact" class="cta-button">申請簽證</a>
+    <!-- 服務特色 -->
+    <section class="features-section">
+        <div class="container">
+            <h2 class="section-title">為什麼選擇 Pack&Go</h2>
+            <p class="section-subtitle">我們致力於為您提供最優質的旅遊服務</p>
+            
+            <div class="features-grid">
+                <div class="feature-card">
+                    <i class="fas fa-shield-alt feature-icon"></i>
+                    <h3 class="feature-title">安全保障</h3>
+                    <p class="feature-description">提供完整的旅遊保險，確保您的旅程安全無虞</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-clock feature-icon"></i>
+                    <h3 class="feature-title">24小時服務</h3>
+                    <p class="feature-description">全天候客服支援，隨時為您解決旅遊相關問題</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-star feature-icon"></i>
+                    <h3 class="feature-title">品質保證</h3>
+                    <p class="feature-description">嚴選合作夥伴，確保每個環節都達到最高品質標準</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-handshake feature-icon"></i>
+                    <h3 class="feature-title">誠信經營</h3>
+                    <p class="feature-description">透明化收費，無隱藏費用，讓您安心出遊</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-users-cog feature-icon"></i>
+                    <h3 class="feature-title">專業團隊</h3>
+                    <p class="feature-description">經驗豐富的旅遊顧問，為您提供專業建議</p>
+                </div>
+                
+                <div class="feature-card">
+                    <i class="fas fa-heart feature-icon"></i>
+                    <h3 class="feature-title">貼心服務</h3>
+                    <p class="feature-description">從規劃到回程，全程貼心照顧您的需求</p>
                 </div>
             </div>
         </div>
@@ -312,7 +508,40 @@
     <!-- 頁腳 -->
     <footer class="footer">
         <div class="container">
-            <p>&copy; 2024 Pack&Go. All rights reserved.</p>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Pack&Go</h3>
+                    <p>專業的旅行社服務，為您打造完美的旅行體驗。從包團旅遊到客製化行程，我們致力於讓每一次旅行都成為難忘的回憶。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>服務項目</h3>
+                    <p><a href="/services">包團旅遊</a></p>
+                    <p><a href="/services">客製旅遊</a></p>
+                    <p><a href="/services">郵輪假期</a></p>
+                    <p><a href="/services">機票預訂</a></p>
+                    <p><a href="/services">飯店住宿</a></p>
+                    <p><a href="/services">中國簽證</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>聯絡資訊</h3>
+                    <p><i class="fas fa-phone"></i> 電話：(02) 1234-5678</p>
+                    <p><i class="fas fa-envelope"></i> 信箱：info@packgo.com.tw</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 地址：台北市信義區信義路五段7號</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>營業時間</h3>
+                    <p>週一至週五：09:00-18:00</p>
+                    <p>週六：09:00-17:00</p>
+                    <p>週日：休息</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pack&Go. 版權所有。</p>
+            </div>
         </div>
     </footer>
 </body>
