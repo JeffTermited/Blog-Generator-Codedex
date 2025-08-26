@@ -1,48 +1,435 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
-  <meta charset="UTF-8">
-  <title>Blog Generator 📝</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 2rem;
-      background-color: #f8f9fa;
-    }
-    h1 {
-      color: #343a40;
-    }
-    textarea {
-      width: 100%;
-      height: 200px;
-      margin-top: 1rem;
-      font-size: 16px;
-    }
-    input[type="text"] {
-      width: 300px;
-      padding: 0.5rem;
-    }
-    button {
-      padding: 0.5rem 1rem;
-      background-color: #198754;
-      color: white;
-      border: none;
-      cursor: pointer;
-      margin-left: 0.5rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pack&Go - 專業旅行社服務</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #fff;
+        }
+
+        /* 導航欄 */
+        .navbar {
+            background-color: #000;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: #fff;
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #fff;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #ccc;
+        }
+
+        /* 英雄區域 */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://images.unsplash.com/photo-1469474968028-56623f02e42e?ixlib=rb-4.0.3&auto=format&fit=crop&w=2074&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #fff;
+            margin-top: 80px;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+
+        .hero-content p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+
+        .cta-button {
+            background-color: #fff;
+            color: #000;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 5px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .cta-button:hover {
+            background-color: #f0f0f0;
+            transform: translateY(-2px);
+        }
+
+        /* 服務區域 */
+        .services {
+            padding: 5rem 0;
+            background-color: #f8f8f8;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #000;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .service-card {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .service-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .service-icon {
+            font-size: 3rem;
+            color: #000;
+            margin-bottom: 1rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #000;
+        }
+
+        /* 特色行程 */
+        .featured-tours {
+            padding: 5rem 0;
+        }
+
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .tour-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .tour-image {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tour-content {
+            padding: 1.5rem;
+        }
+
+        .tour-title {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: #000;
+        }
+
+        .tour-price {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #000;
+            margin-bottom: 0.5rem;
+        }
+
+        .tour-duration {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        /* 優惠區域 */
+        .promotions {
+            padding: 5rem 0;
+            background-color: #000;
+            color: #fff;
+        }
+
+        .promotions .section-title {
+            color: #fff;
+        }
+
+        .promotion-card {
+            background: #fff;
+            color: #000;
+            padding: 2rem;
+            border-radius: 10px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .promotion-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .discount-badge {
+            background: #ff4444;
+            color: #fff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        /* 頁腳 */
+        .footer {
+            background-color: #000;
+            color: #fff;
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .footer-section a:hover {
+            color: #fff;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: #fff;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-links a:hover {
+            color: #ccc;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+    </style>
 </head>
 <body>
-  <h1>📝 Blog Generator</h1>
-  <form method="post">
-    <label for="topic">Enter your blog topic:</label>
-    <input type="text" id="topic" name="topic" required>
-    <button type="submit">Generate</button>
-  </form>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Pack&Go</a>
+            <ul class="nav-links">
+                <li><a href="/">首頁</a></li>
+                <li><a href="/services">服務</a></li>
+                <li><a href="/tours">行程</a></li>
+                <li><a href="/contact">聯絡我們</a></li>
+            </ul>
+        </div>
+    </nav>
 
-  {% if blog_text %}
-    <h2>🪐 Topic: {{ topic }}</h2>
-    <textarea readonly>{{ blog_text }}</textarea>
-  {% endif %}
+    <!-- 英雄區域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>探索世界的美好</h1>
+            <p>Pack&Go 為您提供專業的旅遊服務，從包團旅遊到客製化行程，讓每一次旅行都成為難忘的回憶</p>
+            <a href="/tours" class="cta-button">查看行程</a>
+        </div>
+    </section>
+
+    <!-- 服務區域 -->
+    <section class="services">
+        <div class="container">
+            <h2 class="section-title">我們的服務</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <i class="fas fa-users service-icon"></i>
+                    <h3>包團旅遊</h3>
+                    <p>精心規劃的團體旅遊，讓您與親友共享美好時光</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-map-marked-alt service-icon"></i>
+                    <h3>客製旅遊</h3>
+                    <p>根據您的需求量身打造專屬行程</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-ship service-icon"></i>
+                    <h3>郵輪假期</h3>
+                    <p>豪華郵輪體驗，享受海上度假的樂趣</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-plane service-icon"></i>
+                    <h3>機票預訂</h3>
+                    <p>全球航空公司機票，最優惠的價格</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-hotel service-icon"></i>
+                    <h3>飯店住宿</h3>
+                    <p>精選全球優質飯店，舒適住宿體驗</p>
+                </div>
+                <div class="service-card">
+                    <i class="fas fa-passport service-icon"></i>
+                    <h3>中國簽證</h3>
+                    <p>專業簽證代辦服務，快速便捷</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 特色行程 -->
+    <section class="featured-tours">
+        <div class="container">
+            <h2 class="section-title">特色行程</h2>
+            <div class="tours-grid">
+                {% for tour in featured_tours %}
+                <div class="tour-card">
+                    <div class="tour-image" style="background-image: url('{{ tour.image_url }}')"></div>
+                    <div class="tour-content">
+                        <h3 class="tour-title">{{ tour.title }}</h3>
+                        <div class="tour-price">NT$ {{ "{:,.0f}".format(tour.price) }}</div>
+                        <div class="tour-duration">{{ tour.duration }} | {{ tour.destination }}</div>
+                        <p>{{ tour.description[:100] }}...</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+
+    <!-- 優惠區域 -->
+    <section class="promotions">
+        <div class="container">
+            <h2 class="section-title">最新優惠</h2>
+            {% for promotion in promotions %}
+            <div class="promotion-card">
+                <div class="discount-badge">{{ promotion.discount_percent }}% OFF</div>
+                <h3 class="promotion-title">{{ promotion.title }}</h3>
+                <p>{{ promotion.description }}</p>
+                <small>有效期至: {{ promotion.valid_until.strftime('%Y-%m-%d') }}</small>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Pack&Go</h3>
+                    <p>專業旅行社服務</p>
+                    <p>讓每一次旅行都成為難忘的回憶</p>
+                </div>
+                <div class="footer-section">
+                    <h3>聯絡資訊</h3>
+                    <p>電話: (02) 1234-5678</p>
+                    <p>Email: info@packgo.com.tw</p>
+                    <p>地址: 台北市信義區信義路五段7號</p>
+                </div>
+                <div class="footer-section">
+                    <h3>服務項目</h3>
+                    <a href="/services">包團旅遊</a>
+                    <a href="/services">客製旅遊</a>
+                    <a href="/services">郵輪假期</a>
+                    <a href="/services">機票飯店</a>
+                </div>
+            </div>
+            <div class="social-links">
+                <a href="#"><i class="fab fa-facebook"></i></a>
+                <a href="#"><i class="fab fa-instagram"></i></a>
+                <a href="#"><i class="fab fa-line"></i></a>
+                <a href="#"><i class="fab fa-wechat"></i></a>
+            </div>
+            <p>&copy; 2024 Pack&Go. All rights reserved.</p>
+        </div>
+    </footer>
 </body>
 </html>
