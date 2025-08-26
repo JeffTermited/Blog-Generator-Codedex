@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>旅遊行程 - Pack&Go</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            line-height: 1.6;
+            color: #1a1a1a;
+            background-color: #ffffff;
+        }
+
+        /* 導航欄 */
+        .navbar {
+            background-color: rgba(0, 0, 0, 0.95);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            color: #ffffff;
+            font-size: 2rem;
+            font-weight: 700;
+            text-decoration: none;
+            letter-spacing: -0.5px;
+        }
+
+        .logo span {
+            color: #f0f0f0;
+            font-weight: 300;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #f0f0f0;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background-color: #ffffff;
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* 頁面標題 */
+        .page-header {
+            background: linear-gradient(rgba(0,0,0,0.8), rgba(0,0,0,0.8)), url('https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: #ffffff;
+            margin-top: 80px;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: -1px;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        /* 主要內容 */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .tours-section {
+            padding: 5rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 4rem;
+            font-weight: 300;
+        }
+
+        /* 篩選器 */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            background-color: #ffffff;
+            color: #1a1a1a;
+            border: 2px solid #e9ecef;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #000000;
+            color: #ffffff;
+            border-color: #000000;
+        }
+
+        /* 行程網格 */
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .tour-card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 1px solid #e9ecef;
+            position: relative;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.15);
+        }
+
+        .tour-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+
+        .tour-badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background-color: #000000;
+            color: #ffffff;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .tour-content {
+            padding: 2rem;
+        }
+
+        .tour-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: #1a1a1a;
+            line-height: 1.3;
+        }
+
+        .tour-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tour-meta span {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tour-price {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #000000;
+            margin-bottom: 1.5rem;
+        }
+
+        .tour-description {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .tour-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .tour-feature {
+            background-color: #f8f9fa;
+            color: #1a1a1a;
+            padding: 0.3rem 0.8rem;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .tour-actions {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid #000000;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-primary:hover {
+            background-color: transparent;
+            color: #000000;
+        }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #000000;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-block;
+            border: 2px solid #000000;
+            flex: 1;
+            text-align: center;
+        }
+
+        .btn-secondary:hover {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        /* 無行程狀態 */
+        .no-tours {
+            text-align: center;
+            padding: 5rem 0;
+            color: #666;
+        }
+
+        .no-tours i {
+            font-size: 4rem;
+            color: #ccc;
+            margin-bottom: 2rem;
+        }
+
+        /* 頁腳 */
+        .footer {
+            background-color: #000000;
+            color: #ffffff;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-section h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .footer-section p, .footer-section a {
+            color: #cccccc;
+            text-decoration: none;
+            line-height: 1.8;
+        }
+
+        .footer-section a:hover {
+            color: #ffffff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #333;
+            padding-top: 1rem;
+            text-align: center;
+            color: #cccccc;
+        }
+
+        /* 響應式設計 */
+        @media (max-width: 768px) {
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .nav-links {
+                display: none;
+            }
+            
+            .tours-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .filters {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .tour-actions {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="/" class="logo">Pack<span>&Go</span></a>
+            <ul class="nav-links">
+                <li><a href="/">首頁</a></li>
+                <li><a href="/services">服務項目</a></li>
+                <li><a href="/tours">旅遊行程</a></li>
+                <li><a href="/contact">聯絡我們</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 頁面標題 -->
+    <header class="page-header">
+        <div>
+            <h1 class="page-title">旅遊行程</h1>
+            <p class="page-subtitle">精選全球優質行程，帶您探索世界各地的美麗風景</p>
+        </div>
+    </header>
+
+    <!-- 行程列表 -->
+    <section class="tours-section">
+        <div class="container">
+            <h2 class="section-title">精選行程</h2>
+            <p class="section-subtitle">從亞洲到歐洲，從海島到城市，我們為您準備了豐富多樣的旅遊選擇</p>
+            
+            <!-- 篩選器 -->
+            <div class="filters">
+                <button class="filter-btn active" data-filter="all">全部行程</button>
+                <button class="filter-btn" data-filter="asia">亞洲</button>
+                <button class="filter-btn" data-filter="europe">歐洲</button>
+                <button class="filter-btn" data-filter="america">美洲</button>
+                <button class="filter-btn" data-filter="oceania">大洋洲</button>
+                <button class="filter-btn" data-filter="cruise">郵輪</button>
+            </div>
+            
+            <!-- 行程網格 -->
+            <div class="tours-grid">
+                {% if tours %}
+                    {% for tour in tours %}
+                    <div class="tour-card" data-category="{{ tour.destination.lower() }}">
+                        <div class="tour-image" style="background-image: url('{{ tour.image_url }}')">
+                            {% if tour.is_featured %}
+                            <div class="tour-badge">熱門推薦</div>
+                            {% endif %}
+                        </div>
+                        <div class="tour-content">
+                            <h3 class="tour-title">{{ tour.title }}</h3>
+                            <div class="tour-meta">
+                                <span><i class="fas fa-map-marker-alt"></i> {{ tour.destination }}</span>
+                                <span><i class="fas fa-clock"></i> {{ tour.duration }}</span>
+                            </div>
+                            <div class="tour-price">NT$ {{ "{:,}".format(tour.price) }}</div>
+                            <p class="tour-description">{{ tour.description[:150] }}{% if tour.description|length > 150 %}...{% endif %}</p>
+                            
+                            <div class="tour-features">
+                                <span class="tour-feature">專業導遊</span>
+                                <span class="tour-feature">旅遊保險</span>
+                                <span class="tour-feature">機場接送</span>
+                                <span class="tour-feature">精選住宿</span>
+                            </div>
+                            
+                            <div class="tour-actions">
+                                <a href="/contact" class="btn-primary">立即預訂</a>
+                                <a href="/contact" class="btn-secondary">詳細資訊</a>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="no-tours">
+                        <i class="fas fa-plane-slash"></i>
+                        <h3>目前沒有可用的行程</h3>
+                        <p>請稍後再來查看，或聯絡我們了解最新行程資訊</p>
+                        <a href="/contact" class="btn-primary" style="margin-top: 2rem;">聯絡我們</a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Pack&Go</h3>
+                    <p>專業的旅行社服務，為您打造完美的旅行體驗。從包團旅遊到客製化行程，我們致力於讓每一次旅行都成為難忘的回憶。</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>服務項目</h3>
+                    <p><a href="/services">包團旅遊</a></p>
+                    <p><a href="/services">客製旅遊</a></p>
+                    <p><a href="/services">郵輪假期</a></p>
+                    <p><a href="/services">機票預訂</a></p>
+                    <p><a href="/services">飯店住宿</a></p>
+                    <p><a href="/services">中國簽證</a></p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>聯絡資訊</h3>
+                    <p><i class="fas fa-phone"></i> 電話：(02) 1234-5678</p>
+                    <p><i class="fas fa-envelope"></i> 信箱：info@packgo.com.tw</p>
+                    <p><i class="fas fa-map-marker-alt"></i> 地址：台北市信義區信義路五段7號</p>
+                </div>
+                
+                <div class="footer-section">
+                    <h3>營業時間</h3>
+                    <p>週一至週五：09:00-18:00</p>
+                    <p>週六：09:00-17:00</p>
+                    <p>週日：休息</p>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pack&Go. 版權所有。</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 篩選功能
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const tourCards = document.querySelectorAll('.tour-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // 移除所有按鈕的active類
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // 添加當前按鈕的active類
+                    this.classList.add('active');
+
+                    const filter = this.getAttribute('data-filter');
+
+                    tourCards.forEach(card => {
+                        if (filter === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            const category = card.getAttribute('data-category');
+                            if (category.includes(filter)) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+</html>

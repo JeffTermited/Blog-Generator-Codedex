@@ -1,86 +1,142 @@
-# 📝 Flask Blog Generator
+# Pack&Go 旅行社網站
 
-This is a simple web-based **blog paragraph generator** built with **Flask** and the **OpenAI GPT-3.5 API**.  
-Just enter a topic, and the AI will generate a paragraph about it, displayed instantly on a clean web interface.
+這是一個專業的旅行社網站，為Pack&Go旅行社提供完整的線上服務平台。
 
-## 🚀 Features
+## 🚀 功能特色
 
-- ✅ Enter a topic and get an AI-generated paragraph
-- ✅ Uses OpenAI GPT-3.5 Turbo model
-- ✅ Clean and responsive web UI with HTML/CSS
-- ✅ Built with Flask for easy Python backend
-- ✅ API key is safely managed with dotenv
+### 前台功能
+- ✅ 響應式設計，支援手機和電腦瀏覽
+- ✅ 黑白主題設計，專業簡潔
+- ✅ 首頁展示特色行程和優惠活動
+- ✅ 詳細的服務介紹頁面
+- ✅ 完整的行程列表展示
+- ✅ 聯絡表單和公司資訊
 
-## 🔧 Installation & Setup
+### 後台管理功能
+- ✅ 管理員登入系統
+- ✅ 行程管理（新增、查看）
+- ✅ 優惠活動管理（新增、查看）
+- ✅ 即時統計資訊
+- ✅ 安全的資料庫儲存
 
-### 1️⃣ Clone the repository
+## 🛠 技術架構
+
+- **後端框架**: Flask (Python)
+- **資料庫**: SQLite
+- **前端**: HTML5, CSS3, JavaScript
+- **圖示**: Font Awesome
+- **響應式設計**: CSS Grid & Flexbox
+
+## 📦 安裝與設定
+
+### 1. 安裝依賴套件
 
 ```bash
-git clone https://github.com/your-username/flask-blog-generator.git
-cd flask-blog-generator
-
-2️⃣ Install dependencies
-
 pip install -r requirements.txt
+```
 
-Or manually:
+### 2. 執行應用程式
 
-pip install flask openai python-dotenv
-
-3️⃣ Add your OpenAI API key
-
-Create a file named api_key.env (or .env) in the root directory with the following content:
-
-API_KEY=sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-⚠️ Important: Do not share this file or commit it to GitHub.
-
-4️⃣ Start the Flask server
-
+```bash
 python app.py
+```
 
-Visit http://127.0.0.1:5000 in your browser.
+### 3. 訪問網站
 
-🖼 Example Output
+- 前台網站: http://127.0.0.1:5000
+- 管理後台: http://127.0.0.1:5000/admin/login
 
-Input:
+## 🔐 管理員登入資訊
 
-Topic: Travel
+- **用戶名**: admin
+- **密碼**: packgo2024
 
-Output:
+## 📁 專案結構
 
-Travel opens the door to new experiences, cultures, and connections. It broadens our perspectives and reminds us how diverse and beautiful the world truly is...
+```
+packgo-website/
+├── app.py                 # 主要Flask應用程式
+├── requirements.txt       # Python依賴套件
+├── README.md             # 專案說明文件
+└── templates/            # HTML模板
+    ├── index.html        # 首頁
+    ├── services.html     # 服務頁面
+    ├── tours.html        # 行程頁面
+    ├── contact.html      # 聯絡頁面
+    └── admin/            # 管理後台模板
+        ├── login.html    # 登入頁面
+        ├── dashboard.html # 儀表板
+        ├── add_tour.html # 新增行程
+        └── add_promotion.html # 新增優惠
+```
 
-📁 Project Structure
+## 🎨 設計特色
 
-flask-blog-generator/
-├── app.py               # Main Flask application
-├── api_key.env          # 🔐 Your OpenAI API key (should be ignored by Git)
-├── .gitignore           # Files/folders not to be tracked by Git
-├── requirements.txt     # Python dependencies
-└── templates/
-    └── index.html       # Front-end web interface
+### 黑白主題
+- 使用黑色和白色作為主要色彩
+- 簡潔專業的視覺設計
+- 良好的對比度和可讀性
 
+### 響應式設計
+- 支援各種螢幕尺寸
+- 手機友好的導航設計
+- 自適應的內容佈局
 
-📌 .gitignore (Recommended)
+## 📋 服務項目
 
-Prevent sensitive files like your API key from being pushed to GitHub:
+1. **包團旅遊** - 精心規劃的團體旅遊
+2. **客製旅遊** - 個人化行程設計
+3. **郵輪假期** - 豪華郵輪體驗
+4. **機票預訂** - 全球航空公司機票
+5. **飯店住宿** - 精選全球優質飯店
+6. **中國簽證** - 專業簽證代辦服務
 
-__pycache__/
-api_key.env
-.env
-*.pyc
+## 🔧 自訂設定
 
+### 修改公司資訊
+在 `templates/` 目錄下的各個HTML文件中，您可以修改：
+- 公司名稱和標誌
+- 聯絡資訊
+- 營業時間
+- 地址和電話
 
-💡 To Do / Ideas for Improvement
-	•	Add copy-to-clipboard button ✂️
-	•	Export generated text to .txt file
-	•	Support multi-paragraph blog posts
-	•	Add themes (e.g. Dark Mode 🌙)
-	•	Add language selection dropdown
+### 新增行程
+1. 登入管理後台
+2. 點擊「新增行程」
+3. 填寫行程資訊
+4. 設定是否為特色行程
 
+### 新增優惠
+1. 登入管理後台
+2. 點擊「新增優惠」
+3. 填寫優惠資訊
+4. 設定有效期和折扣
 
-🛠 Built With
-	•	Flask
-	•	OpenAI API
-	•	Python-dotenv
+## 🚀 部署建議
+
+### 生產環境部署
+1. 使用 Gunicorn 或 uWSGI 作為WSGI伺服器
+2. 設定 Nginx 作為反向代理
+3. 使用 PostgreSQL 或 MySQL 替代 SQLite
+4. 設定 SSL 憑證確保安全性
+
+### 安全性建議
+1. 修改預設管理員密碼
+2. 設定強密碼政策
+3. 定期備份資料庫
+4. 監控系統日誌
+
+## 📞 聯絡資訊
+
+- **公司名稱**: Pack&Go
+- **地址**: 台北市信義區信義路五段7號
+- **電話**: (02) 1234-5678
+- **Email**: info@packgo.com.tw
+
+## 📄 授權
+
+© 2024 Pack&Go. All rights reserved.
+
+---
+
+**注意**: 這是一個示範網站，實際使用時請根據您的需求進行客製化修改。
