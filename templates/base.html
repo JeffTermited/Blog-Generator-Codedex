@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Pack&Go 旅行社{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+</head>
+<body>
+    <!-- 導航欄 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo">
+                <div class="logo-icon">P&G</div>
+                <span class="logo-text">Pack&Go</span>
+            </a>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="{{ url_for('index') }}" class="nav-link">首頁</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('services') }}" class="nav-link">服務項目</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('packages') }}" class="nav-link">旅遊套裝</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('contact') }}" class="nav-link">聯絡我們</a>
+                </li>
+                <li class="nav-item">
+                    <a href="{{ url_for('admin_login') }}" class="nav-link">管理員</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要內容 -->
+    <main>
+        <!-- 顯示Flash訊息 -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="container" style="margin-top: 1rem;">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ 'error' if category == 'error' else category }}">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- 頁腳 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Pack&Go 旅行社</h3>
+                    <p>專業的旅遊服務，為您打造完美的旅行體驗。從包團旅遊到客製化行程，我們都能滿足您的需求。</p>
+                </div>
+                <div class="footer-section">
+                    <h3>服務項目</h3>
+                    <ul>
+                        <li><a href="{{ url_for('service_detail', service_type='group-tour') }}">包團旅遊</a></li>
+                        <li><a href="{{ url_for('service_detail', service_type='custom-tour') }}">客製旅遊</a></li>
+                        <li><a href="{{ url_for('service_detail', service_type='cruise') }}">郵輪服務</a></li>
+                        <li><a href="{{ url_for('service_detail', service_type='flight') }}">機票服務</a></li>
+                        <li><a href="{{ url_for('service_detail', service_type='hotel') }}">飯店住宿</a></li>
+                        <li><a href="{{ url_for('service_detail', service_type='visa') }}">中國簽證</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>聯絡資訊</h3>
+                    <ul>
+                        <li>電話: (02) 1234-5678</li>
+                        <li>傳真: (02) 1234-5679</li>
+                        <li>Email: info@packandgo.com.tw</li>
+                        <li>地址: 台北市中山區復興北路123號</li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>營業時間</h3>
+                    <ul>
+                        <li>週一至週五: 09:00 - 18:00</li>
+                        <li>週六: 09:00 - 17:00</li>
+                        <li>週日及國定假日: 公休</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Pack&Go 旅行社. 版權所有.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

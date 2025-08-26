@@ -1,0 +1,166 @@
+{% extends "admin/base.html" %}
+
+{% block title %}編輯優惠活動 - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1>編輯優惠活動</h1>
+    <p>編輯 "{{ promotion.title }}" 的資訊</p>
+</div>
+
+<div style="max-width: 800px;">
+    <div class="service-card">
+        <form method="POST" style="text-align: left;">
+            <div class="form-group">
+                <label for="title">優惠名稱 *</label>
+                <input type="text" id="title" name="title" class="form-control" required 
+                       value="{{ promotion.title }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">優惠描述 *</label>
+                <textarea id="description" name="description" class="form-control" rows="3" required>{{ promotion.description }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label for="discount">折扣內容 *</label>
+                <input type="text" id="discount" name="discount" class="form-control" required
+                       value="{{ promotion.discount }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="valid_until">優惠期限</label>
+                <input type="date" id="valid_until" name="valid_until" class="form-control"
+                       value="{{ promotion.valid_until or '' }}">
+                <small style="color: var(--medium-gray);">不設定則為無期限優惠</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="terms">使用條款</label>
+                <textarea id="terms" name="terms" class="form-control" rows="4">{{ promotion.terms or '' }}</textarea>
+            </div>
+            
+            <div class="form-group">
+                <label style="display: flex; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" id="is_active" name="is_active" {{ 'checked' if promotion.is_active }}>
+                    啟用此優惠
+                </label>
+                <small style="color: var(--medium-gray);">取消勾選將停用此優惠活動</small>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                <a href="{{ url_for('admin_promotions') }}" class="btn btn-secondary">取消</a>
+                <button type="submit" class="btn btn-primary">更新優惠</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 預覽區域 -->
+<div style="max-width: 800px; margin-top: 2rem;">
+    <h3>預覽效果</h3>
+    <div class="service-card" style="max-width: 400px; border: 2px solid var(--primary-black);">
+        <div class="service-icon" style="background-color: #dc3545;">🎉</div>
+        <h3 id="preview-title">{{ promotion.title }}</h3>
+        <p id="preview-description">{{ promotion.description }}</p>
+        <div style="margin-top: 1rem;">
+            <strong style="color: var(--primary-black); font-size: 1.2rem;" id="preview-discount">{{ promotion.discount }}</strong>
+        </div>
+        <p style="color: var(--medium-gray); font-size: 0.9rem; margin-top: 0.5rem;" id="preview-valid">
+            {% if promotion.valid_until %}
+                優惠期限: {{ promotion.valid_until }}
+            {% else %}
+                優惠期限: 無期限
+            {% endif %}
+        </p>
+        <a href="#" class="btn btn-primary" style="margin-top: 1rem; pointer-events: none;">立即預訂</a>
+    </div>
+</div>
+
+<!-- 優惠資訊 -->
+<div style="max-width: 800px; margin-top: 2rem;">
+    <div class="service-card">
+        <h3>優惠資訊</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <div>
+                <strong>優惠ID:</strong> {{ promotion.id }}
+            </div>
+            <div>
+                <strong>當前狀態:</strong> 
+                <span style="color: {{ '#28a745' if promotion.is_active else '#6c757d' }};">
+                    {{ '進行中' if promotion.is_active else '已停用' }}
+                </span>
+            </div>
+            <div>
+                <strong>建立時間:</strong> {{ promotion.created_at[:19] if promotion.created_at else '未知' }}
+            </div>
+            {% if promotion.updated_at %}
+            <div>
+                <strong>最後更新:</strong> {{ promotion.updated_at[:19] }}
+            </div>
+            {% endif %}
+        </div>
+        
+        {% if promotion.terms %}
+        <div style="margin-top: 1.5rem;">
+            <strong>使用條款:</strong>
+            <div style="background-color: var(--light-gray); padding: 1rem; border-radius: 5px; margin-top: 0.5rem;">
+                {{ promotion.terms }}
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</div>
+
+<!-- 狀態提醒 -->
+{% if promotion.valid_until %}
+<div style="max-width: 800px; margin-top: 2rem;">
+    {% set today = moment().format('YYYY-MM-DD') %}
+    {% if promotion.valid_until < today %}
+    <div class="alert alert-error">
+        <strong>⚠️ 注意：</strong>此優惠已過期（期限：{{ promotion.valid_until }}），建議停用或更新期限。
+    </div>
+    {% elif promotion.valid_until <= (moment().add(7, 'days').format('YYYY-MM-DD')) %}
+    <div class="alert alert-info">
+        <strong>📅 提醒：</strong>此優惠即將到期（期限：{{ promotion.valid_until }}），請注意更新。
+    </div>
+    {% endif %}
+</div>
+{% endif %}
+
+<script>
+// 即時預覽功能
+document.addEventListener('DOMContentLoaded', function() {
+    const titleInput = document.getElementById('title');
+    const descriptionInput = document.getElementById('description');
+    const discountInput = document.getElementById('discount');
+    const validUntilInput = document.getElementById('valid_until');
+    
+    const previewTitle = document.getElementById('preview-title');
+    const previewDescription = document.getElementById('preview-description');
+    const previewDiscount = document.getElementById('preview-discount');
+    const previewValid = document.getElementById('preview-valid');
+    
+    function updatePreview() {
+        previewTitle.textContent = titleInput.value || '優惠名稱';
+        previewDescription.textContent = descriptionInput.value || '優惠描述';
+        previewDiscount.textContent = discountInput.value || '折扣內容';
+        
+        if (validUntilInput.value) {
+            previewValid.textContent = `優惠期限: ${validUntilInput.value}`;
+        } else {
+            previewValid.textContent = '優惠期限: 無期限';
+        }
+    }
+    
+    titleInput.addEventListener('input', updatePreview);
+    descriptionInput.addEventListener('input', updatePreview);
+    discountInput.addEventListener('input', updatePreview);
+    validUntilInput.addEventListener('input', updatePreview);
+    
+    // 設定最小日期為今天
+    const today = new Date().toISOString().split('T')[0];
+    validUntilInput.min = today;
+});
+</script>
+{% endblock %}

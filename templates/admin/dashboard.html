@@ -1,0 +1,174 @@
+{% extends "admin/base.html" %}
+
+{% block title %}管理員控制台 - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1>管理員控制台</h1>
+    <p>歡迎使用 Pack&Go 旅行社管理系統</p>
+</div>
+
+<!-- 統計卡片 -->
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1.5rem; margin-bottom: 3rem;">
+    <div class="service-card" style="text-align: center;">
+        <div class="service-icon" style="background-color: #28a745;">📦</div>
+        <h3>旅遊套裝</h3>
+        <div style="font-size: 2rem; font-weight: bold; color: var(--primary-black); margin: 0.5rem 0;">
+            {{ travel_packages|length }}
+        </div>
+        <p>個套裝行程</p>
+        <a href="{{ url_for('admin_packages') }}" class="btn btn-secondary" style="margin-top: 1rem;">管理套裝</a>
+    </div>
+    
+    <div class="service-card" style="text-align: center;">
+        <div class="service-icon" style="background-color: #dc3545;">🎉</div>
+        <h3>優惠活動</h3>
+        <div style="font-size: 2rem; font-weight: bold; color: var(--primary-black); margin: 0.5rem 0;">
+            {{ promotions|length }}
+        </div>
+        <p>個優惠活動</p>
+        <a href="{{ url_for('admin_promotions') }}" class="btn btn-secondary" style="margin-top: 1rem;">管理優惠</a>
+    </div>
+    
+    <div class="service-card" style="text-align: center;">
+        <div class="service-icon" style="background-color: #17a2b8;">📊</div>
+        <h3>活躍優惠</h3>
+        <div style="font-size: 2rem; font-weight: bold; color: var(--primary-black); margin: 0.5rem 0;">
+            {{ promotions|selectattr('is_active')|list|length }}
+        </div>
+        <p>個進行中</p>
+        <a href="{{ url_for('admin_promotions') }}" class="btn btn-secondary" style="margin-top: 1rem;">查看詳情</a>
+    </div>
+    
+    <div class="service-card" style="text-align: center;">
+        <div class="service-icon" style="background-color: #ffc107; color: var(--primary-black);">🌐</div>
+        <h3>前台網站</h3>
+        <div style="font-size: 1.2rem; font-weight: bold; color: var(--primary-black); margin: 0.5rem 0;">
+            Pack&Go
+        </div>
+        <p>官方網站</p>
+        <a href="{{ url_for('index') }}" target="_blank" class="btn btn-secondary" style="margin-top: 1rem;">查看網站</a>
+    </div>
+</div>
+
+<!-- 快速操作 -->
+<div style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1.5rem;">快速操作</h2>
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+        <a href="{{ url_for('admin_add_package') }}" class="btn btn-primary" style="padding: 1rem; text-decoration: none; display: block;">
+            <strong>新增旅遊套裝</strong><br>
+            <small style="opacity: 0.8;">建立新的旅遊行程套裝</small>
+        </a>
+        
+        <a href="{{ url_for('admin_add_promotion') }}" class="btn btn-primary" style="padding: 1rem; text-decoration: none; display: block;">
+            <strong>新增優惠活動</strong><br>
+            <small style="opacity: 0.8;">建立新的促銷優惠</small>
+        </a>
+    </div>
+</div>
+
+<!-- 最新套裝 -->
+{% if travel_packages %}
+<div style="margin-bottom: 3rem;">
+    <h2 style="margin-bottom: 1.5rem;">最新旅遊套裝</h2>
+    <div class="table" style="overflow-x: auto;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>套裝名稱</th>
+                    <th>價格</th>
+                    <th>天數</th>
+                    <th>服務類型</th>
+                    <th>建立時間</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for package in travel_packages[-5:] %}
+                <tr>
+                    <td>{{ package.title }}</td>
+                    <td>NT$ {{ package.price }}</td>
+                    <td>{{ package.duration }}</td>
+                    <td>
+                        {% if package.service_type == 'group-tour' %}包團旅遊
+                        {% elif package.service_type == 'custom-tour' %}客製旅遊
+                        {% elif package.service_type == 'cruise' %}郵輪服務
+                        {% elif package.service_type == 'flight' %}機票服務
+                        {% elif package.service_type == 'hotel' %}飯店住宿
+                        {% elif package.service_type == 'visa' %}簽證服務
+                        {% else %}其他
+                        {% endif %}
+                    </td>
+                    <td>{{ package.created_at[:10] if package.created_at else '未知' }}</td>
+                    <td>
+                        <a href="{{ url_for('admin_edit_package', package_id=package.id) }}" style="color: var(--primary-black); text-decoration: none; margin-right: 1rem;">編輯</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center; margin-top: 1rem;">
+        <a href="{{ url_for('admin_packages') }}" class="btn btn-secondary">查看所有套裝</a>
+    </div>
+</div>
+{% endif %}
+
+<!-- 最新優惠 -->
+{% if promotions %}
+<div>
+    <h2 style="margin-bottom: 1.5rem;">最新優惠活動</h2>
+    <div class="table" style="overflow-x: auto;">
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>優惠名稱</th>
+                    <th>折扣</th>
+                    <th>有效期限</th>
+                    <th>狀態</th>
+                    <th>建立時間</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for promotion in promotions[-5:] %}
+                <tr>
+                    <td>{{ promotion.title }}</td>
+                    <td>{{ promotion.discount }}</td>
+                    <td>{{ promotion.valid_until or '無期限' }}</td>
+                    <td>
+                        <span style="padding: 0.25rem 0.5rem; border-radius: 3px; font-size: 0.8rem; 
+                                     background-color: {{ '#28a745' if promotion.is_active else '#6c757d' }}; 
+                                     color: white;">
+                            {{ '進行中' if promotion.is_active else '已停用' }}
+                        </span>
+                    </td>
+                    <td>{{ promotion.created_at[:10] if promotion.created_at else '未知' }}</td>
+                    <td>
+                        <a href="{{ url_for('admin_edit_promotion', promotion_id=promotion.id) }}" style="color: var(--primary-black); text-decoration: none; margin-right: 1rem;">編輯</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div style="text-align: center; margin-top: 1rem;">
+        <a href="{{ url_for('admin_promotions') }}" class="btn btn-secondary">查看所有優惠</a>
+    </div>
+</div>
+{% endif %}
+
+<!-- 如果沒有數據 -->
+{% if not travel_packages and not promotions %}
+<div style="text-align: center; padding: 3rem 0;">
+    <h3>歡迎使用管理系統！</h3>
+    <p style="color: var(--medium-gray); margin: 1rem 0;">
+        您可以開始新增旅遊套裝和優惠活動來豐富您的網站內容。
+    </p>
+    <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+        <a href="{{ url_for('admin_add_package') }}" class="btn btn-primary">新增第一個套裝</a>
+        <a href="{{ url_for('admin_add_promotion') }}" class="btn btn-secondary">新增第一個優惠</a>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

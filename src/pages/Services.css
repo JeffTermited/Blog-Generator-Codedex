@@ -1,0 +1,240 @@
+/* Page Header */
+.page-header {
+  background: linear-gradient(135deg, var(--gray-100) 0%, var(--primary-white) 100%);
+  padding: 120px 0 80px;
+  text-align: center;
+}
+
+.page-title {
+  font-size: 3rem;
+  font-weight: 700;
+  color: var(--primary-black);
+  margin-bottom: 20px;
+}
+
+.page-description {
+  font-size: 1.25rem;
+  color: var(--gray-600);
+  max-width: 600px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* Services Detail */
+.services-detail-section {
+  background-color: var(--primary-white);
+}
+
+.services-detail-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
+
+.service-detail-card {
+  background: var(--primary-white);
+  border-radius: 16px;
+  padding: 40px;
+  border: 1px solid var(--gray-200);
+  transition: all 0.3s ease;
+}
+
+.service-detail-card:hover {
+  box-shadow: var(--shadow-xl);
+  transform: translateY(-4px);
+}
+
+.service-detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 30px;
+  margin-bottom: 40px;
+}
+
+.service-detail-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100px;
+  height: 100px;
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  border-radius: 20px;
+  flex-shrink: 0;
+}
+
+.service-detail-info {
+  flex: 1;
+}
+
+.service-detail-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary-black);
+  margin-bottom: 16px;
+}
+
+.service-detail-description {
+  font-size: 1.125rem;
+  color: var(--gray-600);
+  line-height: 1.6;
+}
+
+.service-detail-content {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.service-detail-features h3,
+.service-detail-benefits h3 {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary-black);
+  margin-bottom: 20px;
+}
+
+.service-detail-features ul {
+  list-style: none;
+}
+
+.service-detail-features li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--gray-700);
+  margin-bottom: 12px;
+  font-size: 1rem;
+}
+
+.service-detail-features li svg {
+  color: var(--primary-black);
+  flex-shrink: 0;
+}
+
+.benefits-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.benefit-item {
+  background-color: var(--gray-100);
+  padding: 12px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--gray-700);
+  text-align: center;
+}
+
+/* Contact CTA */
+.contact-cta-section {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+  text-align: center;
+}
+
+.contact-cta-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.contact-cta-description {
+  font-size: 1.125rem;
+  color: var(--gray-300);
+  margin-bottom: 40px;
+  line-height: 1.6;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.contact-cta-section .btn-primary {
+  background-color: var(--primary-white);
+  color: var(--primary-black);
+  font-size: 1.125rem;
+  padding: 16px 32px;
+}
+
+.contact-cta-section .btn-primary:hover {
+  background-color: var(--gray-100);
+}
+
+/* 響應式設計 */
+@media (max-width: 1024px) {
+  .service-detail-content {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .benefits-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 100px 0 60px;
+  }
+  
+  .page-title {
+    font-size: 2.5rem;
+  }
+  
+  .page-description {
+    font-size: 1.125rem;
+  }
+  
+  .service-detail-card {
+    padding: 30px 20px;
+  }
+  
+  .service-detail-header {
+    flex-direction: column;
+    text-align: center;
+    gap: 20px;
+  }
+  
+  .service-detail-icon {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto;
+  }
+  
+  .service-detail-title {
+    font-size: 1.75rem;
+  }
+  
+  .service-detail-description {
+    font-size: 1rem;
+  }
+  
+  .contact-cta-title {
+    font-size: 1.875rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .page-title {
+    font-size: 2rem;
+  }
+  
+  .service-detail-card {
+    padding: 20px 16px;
+  }
+  
+  .service-detail-icon {
+    width: 60px;
+    height: 60px;
+  }
+  
+  .service-detail-title {
+    font-size: 1.5rem;
+  }
+  
+  .contact-cta-title {
+    font-size: 1.5rem;
+  }
+}

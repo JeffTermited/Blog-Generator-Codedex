@@ -1,0 +1,175 @@
+{% extends "admin/base.html" %}
+
+{% block title %}編輯旅遊套裝 - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1>編輯旅遊套裝</h1>
+    <p>編輯 "{{ package.title }}" 的資訊</p>
+</div>
+
+<div style="max-width: 800px;">
+    <div class="service-card">
+        <form method="POST" style="text-align: left;">
+            <div class="form-group">
+                <label for="title">套裝名稱 *</label>
+                <input type="text" id="title" name="title" class="form-control" required 
+                       value="{{ package.title }}">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">套裝描述 *</label>
+                <textarea id="description" name="description" class="form-control" rows="4" required>{{ package.description }}</textarea>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="price">價格 (NT$) *</label>
+                    <input type="number" id="price" name="price" class="form-control" required min="0"
+                           value="{{ package.price }}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">行程天數 *</label>
+                    <input type="text" id="duration" name="duration" class="form-control" required
+                           value="{{ package.duration }}">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="service_type">服務類型 *</label>
+                <select id="service_type" name="service_type" class="form-control" required>
+                    <option value="">請選擇服務類型</option>
+                    <option value="group-tour" {{ 'selected' if package.service_type == 'group-tour' }}>包團旅遊</option>
+                    <option value="custom-tour" {{ 'selected' if package.service_type == 'custom-tour' }}>客製旅遊</option>
+                    <option value="cruise" {{ 'selected' if package.service_type == 'cruise' }}>郵輪服務</option>
+                    <option value="flight" {{ 'selected' if package.service_type == 'flight' }}>機票服務</option>
+                    <option value="hotel" {{ 'selected' if package.service_type == 'hotel' }}>飯店住宿</option>
+                    <option value="visa" {{ 'selected' if package.service_type == 'visa' }}>簽證服務</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="image_url">套裝圖片網址</label>
+                <input type="url" id="image_url" name="image_url" class="form-control"
+                       value="{{ package.image_url or '/static/images/default-tour.jpg' }}">
+                <small style="color: var(--medium-gray);">圖片將顯示在套裝卡片上</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="highlights">行程亮點</label>
+                <textarea id="highlights" name="highlights" class="form-control" rows="5">{% if package.highlights %}{{ package.highlights|join('\n') }}{% endif %}</textarea>
+                <small style="color: var(--medium-gray);">每行輸入一個亮點</small>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                <a href="{{ url_for('admin_packages') }}" class="btn btn-secondary">取消</a>
+                <button type="submit" class="btn btn-primary">更新套裝</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 預覽區域 -->
+<div style="max-width: 800px; margin-top: 2rem;">
+    <h3>預覽效果</h3>
+    <div class="package-card" style="max-width: 400px;">
+        <div class="package-image" style="background-image: url('{{ package.image_url or '/static/images/default-tour.jpg' }}'); height: 200px;"></div>
+        <div class="package-content">
+            <h3 id="preview-title">{{ package.title }}</h3>
+            <div class="package-price" id="preview-price">NT$ {{ package.price }}</div>
+            <p id="preview-description">{{ package.description }}</p>
+            <p><strong>行程天數:</strong> <span id="preview-duration">{{ package.duration }}</span></p>
+            <div id="preview-highlights" style="margin-top: 1rem;">
+                <strong>行程亮點:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                    {% if package.highlights %}
+                        {% for highlight in package.highlights %}
+                            {% if highlight.strip() %}
+                            <li>{{ highlight.strip() }}</li>
+                            {% endif %}
+                        {% endfor %}
+                    {% else %}
+                    <li>行程亮點將顯示在這裡</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 套裝資訊 -->
+<div style="max-width: 800px; margin-top: 2rem;">
+    <div class="service-card">
+        <h3>套裝資訊</h3>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+            <div>
+                <strong>套裝ID:</strong> {{ package.id }}
+            </div>
+            <div>
+                <strong>建立時間:</strong> {{ package.created_at[:19] if package.created_at else '未知' }}
+            </div>
+            {% if package.updated_at %}
+            <div>
+                <strong>最後更新:</strong> {{ package.updated_at[:19] }}
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+<script>
+// 即時預覽功能
+document.addEventListener('DOMContentLoaded', function() {
+    const titleInput = document.getElementById('title');
+    const priceInput = document.getElementById('price');
+    const descriptionInput = document.getElementById('description');
+    const durationInput = document.getElementById('duration');
+    const highlightsInput = document.getElementById('highlights');
+    const imageUrlInput = document.getElementById('image_url');
+    
+    const previewTitle = document.getElementById('preview-title');
+    const previewPrice = document.getElementById('preview-price');
+    const previewDescription = document.getElementById('preview-description');
+    const previewDuration = document.getElementById('preview-duration');
+    const previewHighlights = document.getElementById('preview-highlights');
+    const previewImage = document.querySelector('.package-image');
+    
+    function updatePreview() {
+        previewTitle.textContent = titleInput.value || '套裝名稱';
+        previewPrice.textContent = 'NT$ ' + (priceInput.value || '0');
+        previewDescription.textContent = descriptionInput.value || '套裝描述';
+        previewDuration.textContent = durationInput.value || '-';
+        
+        if (imageUrlInput.value) {
+            previewImage.style.backgroundImage = `url('${imageUrlInput.value}')`;
+        }
+        
+        if (highlightsInput.value.trim()) {
+            const highlights = highlightsInput.value.split('\n').filter(h => h.trim());
+            const highlightsList = highlights.map(h => `<li>${h.trim()}</li>`).join('');
+            previewHighlights.innerHTML = `
+                <strong>行程亮點:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                    ${highlightsList}
+                </ul>
+            `;
+        } else {
+            previewHighlights.innerHTML = `
+                <strong>行程亮點:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                    <li>行程亮點將顯示在這裡</li>
+                </ul>
+            `;
+        }
+    }
+    
+    titleInput.addEventListener('input', updatePreview);
+    priceInput.addEventListener('input', updatePreview);
+    descriptionInput.addEventListener('input', updatePreview);
+    durationInput.addEventListener('input', updatePreview);
+    highlightsInput.addEventListener('input', updatePreview);
+    imageUrlInput.addEventListener('input', updatePreview);
+});
+</script>
+{% endblock %}

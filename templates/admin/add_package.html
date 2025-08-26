@@ -1,0 +1,150 @@
+{% extends "admin/base.html" %}
+
+{% block title %}新增旅遊套裝 - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1>新增旅遊套裝</h1>
+    <p>建立新的旅遊行程套裝</p>
+</div>
+
+<div style="max-width: 800px;">
+    <div class="service-card">
+        <form method="POST" style="text-align: left;">
+            <div class="form-group">
+                <label for="title">套裝名稱 *</label>
+                <input type="text" id="title" name="title" class="form-control" required 
+                       placeholder="例如：日本東京5日遊">
+            </div>
+            
+            <div class="form-group">
+                <label for="description">套裝描述 *</label>
+                <textarea id="description" name="description" class="form-control" rows="4" required
+                          placeholder="詳細描述這個旅遊套裝的特色、行程概要等..."></textarea>
+            </div>
+            
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                <div class="form-group">
+                    <label for="price">價格 (NT$) *</label>
+                    <input type="number" id="price" name="price" class="form-control" required min="0"
+                           placeholder="30000">
+                </div>
+                
+                <div class="form-group">
+                    <label for="duration">行程天數 *</label>
+                    <input type="text" id="duration" name="duration" class="form-control" required
+                           placeholder="例如：5天4夜">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label for="service_type">服務類型 *</label>
+                <select id="service_type" name="service_type" class="form-control" required>
+                    <option value="">請選擇服務類型</option>
+                    <option value="group-tour">包團旅遊</option>
+                    <option value="custom-tour">客製旅遊</option>
+                    <option value="cruise">郵輪服務</option>
+                    <option value="flight">機票服務</option>
+                    <option value="hotel">飯店住宿</option>
+                    <option value="visa">簽證服務</option>
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="image_url">套裝圖片網址</label>
+                <input type="url" id="image_url" name="image_url" class="form-control"
+                       placeholder="https://example.com/image.jpg"
+                       value="/static/images/default-tour.jpg">
+                <small style="color: var(--medium-gray);">留空將使用預設圖片</small>
+            </div>
+            
+            <div class="form-group">
+                <label for="highlights">行程亮點</label>
+                <textarea id="highlights" name="highlights" class="form-control" rows="5"
+                          placeholder="每行一個亮點，例如：&#10;參觀東京晴空塔&#10;體驗日式溫泉&#10;品嚐正宗日式料理&#10;專業導遊陪同"></textarea>
+                <small style="color: var(--medium-gray);">每行輸入一個亮點</small>
+            </div>
+            
+            <div style="display: flex; gap: 1rem; justify-content: flex-end; margin-top: 2rem;">
+                <a href="{{ url_for('admin_packages') }}" class="btn btn-secondary">取消</a>
+                <button type="submit" class="btn btn-primary">新增套裝</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- 預覽區域 -->
+<div style="max-width: 800px; margin-top: 2rem;">
+    <h3>預覽效果</h3>
+    <div class="package-card" style="max-width: 400px;">
+        <div class="package-image" style="background-image: url('/static/images/default-tour.jpg'); height: 200px;"></div>
+        <div class="package-content">
+            <h3 id="preview-title">套裝名稱將顯示在這裡</h3>
+            <div class="package-price" id="preview-price">NT$ 0</div>
+            <p id="preview-description">套裝描述將顯示在這裡</p>
+            <p><strong>行程天數:</strong> <span id="preview-duration">-</span></p>
+            <div id="preview-highlights" style="margin-top: 1rem;">
+                <strong>行程亮點:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                    <li>行程亮點將顯示在這裡</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 即時預覽功能
+document.addEventListener('DOMContentLoaded', function() {
+    const titleInput = document.getElementById('title');
+    const priceInput = document.getElementById('price');
+    const descriptionInput = document.getElementById('description');
+    const durationInput = document.getElementById('duration');
+    const highlightsInput = document.getElementById('highlights');
+    const imageUrlInput = document.getElementById('image_url');
+    
+    const previewTitle = document.getElementById('preview-title');
+    const previewPrice = document.getElementById('preview-price');
+    const previewDescription = document.getElementById('preview-description');
+    const previewDuration = document.getElementById('preview-duration');
+    const previewHighlights = document.getElementById('preview-highlights');
+    const previewImage = document.querySelector('.package-image');
+    
+    function updatePreview() {
+        previewTitle.textContent = titleInput.value || '套裝名稱將顯示在這裡';
+        previewPrice.textContent = 'NT$ ' + (priceInput.value || '0');
+        previewDescription.textContent = descriptionInput.value || '套裝描述將顯示在這裡';
+        previewDuration.textContent = durationInput.value || '-';
+        
+        if (imageUrlInput.value) {
+            previewImage.style.backgroundImage = `url('${imageUrlInput.value}')`;
+        }
+        
+        if (highlightsInput.value.trim()) {
+            const highlights = highlightsInput.value.split('\n').filter(h => h.trim());
+            const highlightsList = highlights.map(h => `<li>${h.trim()}</li>`).join('');
+            previewHighlights.innerHTML = `
+                <strong>行程亮點:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                    ${highlightsList}
+                </ul>
+            `;
+        } else {
+            previewHighlights.innerHTML = `
+                <strong>行程亮點:</strong>
+                <ul style="margin-top: 0.5rem; padding-left: 1rem;">
+                    <li>行程亮點將顯示在這裡</li>
+                </ul>
+            `;
+        }
+    }
+    
+    titleInput.addEventListener('input', updatePreview);
+    priceInput.addEventListener('input', updatePreview);
+    descriptionInput.addEventListener('input', updatePreview);
+    durationInput.addEventListener('input', updatePreview);
+    highlightsInput.addEventListener('input', updatePreview);
+    imageUrlInput.addEventListener('input', updatePreview);
+});
+</script>
+{% endblock %}

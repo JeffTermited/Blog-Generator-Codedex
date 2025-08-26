@@ -1,0 +1,134 @@
+{% extends "base.html" %}
+
+{% block title %}服務項目 - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<!-- 頁面標題 -->
+<section class="hero" style="padding: 4rem 0;">
+    <div class="container">
+        <h1>我們的服務</h1>
+        <p class="hero-description">
+            Pack&Go 提供全方位的旅遊服務，從團體旅遊到個人客製化行程，滿足您的各種旅遊需求。
+        </p>
+    </div>
+</section>
+
+<!-- 詳細服務介紹 -->
+<section class="services">
+    <div class="container">
+        <div class="services-grid">
+            <!-- 包團旅遊 -->
+            <div class="service-card">
+                <div class="service-icon">🌍</div>
+                <h3>包團旅遊</h3>
+                <p>專為團體客戶設計的完整旅遊套裝，包含交通、住宿、餐食、導遊服務等。適合公司員工旅遊、同學會、家族旅遊等各種團體出遊需求。</p>
+                <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                    <li>專業導遊隨團服務</li>
+                    <li>精選住宿與餐廳</li>
+                    <li>完整行程規劃</li>
+                    <li>團體優惠價格</li>
+                </ul>
+                <a href="{{ url_for('service_detail', service_type='group-tour') }}" class="btn btn-primary">了解詳情</a>
+            </div>
+
+            <!-- 客製旅遊 -->
+            <div class="service-card">
+                <div class="service-icon">✈️</div>
+                <h3>客製旅遊</h3>
+                <p>根據您的個人喜好、預算與時間，量身打造專屬的旅遊行程。無論是蜜月旅行、親子旅遊或個人深度旅遊，我們都能為您規劃完美行程。</p>
+                <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                    <li>一對一專業諮詢</li>
+                    <li>彈性行程安排</li>
+                    <li>精選住宿推薦</li>
+                    <li>24小時緊急支援</li>
+                </ul>
+                <a href="{{ url_for('service_detail', service_type='custom-tour') }}" class="btn btn-primary">了解詳情</a>
+            </div>
+
+            <!-- 郵輪服務 -->
+            <div class="service-card">
+                <div class="service-icon">🚢</div>
+                <h3>郵輪服務</h3>
+                <p>提供各大郵輪公司的航線預訂服務，包含地中海、加勒比海、日韓航線等。享受海上度假的奢華體驗，一次暢遊多個目的地。</p>
+                <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                    <li>多條熱門航線選擇</li>
+                    <li>艙房升等服務</li>
+                    <li>岸上觀光安排</li>
+                    <li>郵輪餐飲規劃</li>
+                </ul>
+                <a href="{{ url_for('service_detail', service_type='cruise') }}" class="btn btn-primary">了解詳情</a>
+            </div>
+
+            <!-- 機票服務 -->
+            <div class="service-card">
+                <div class="service-icon">🎫</div>
+                <h3>機票服務</h3>
+                <p>提供國內外機票預訂服務，與各大航空公司合作，為您找到最優惠的票價。支援團體機票、商務艙升等等各種需求。</p>
+                <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                    <li>即時票價查詢</li>
+                    <li>團體機票折扣</li>
+                    <li>彈性退改簽服務</li>
+                    <li>機場接送安排</li>
+                </ul>
+                <a href="{{ url_for('service_detail', service_type='flight') }}" class="btn btn-primary">了解詳情</a>
+            </div>
+
+            <!-- 飯店住宿 -->
+            <div class="service-card">
+                <div class="service-icon">🏨</div>
+                <h3>飯店住宿</h3>
+                <p>精選全球優質住宿，從經濟型旅館到豪華度假村，滿足不同預算與需求。提供最優惠的價格與完善的預訂服務。</p>
+                <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                    <li>全球飯店資源</li>
+                    <li>房型升等服務</li>
+                    <li>早餐與設施優惠</li>
+                    <li>彈性取消政策</li>
+                </ul>
+                <a href="{{ url_for('service_detail', service_type='hotel') }}" class="btn btn-primary">了解詳情</a>
+            </div>
+
+            <!-- 中國簽證 -->
+            <div class="service-card">
+                <div class="service-icon">📋</div>
+                <h3>中國簽證</h3>
+                <p>提供專業的中國簽證申請代辦服務，包含旅遊簽證、商務簽證等各種類型。簡化申請流程，提高過簽率。</p>
+                <ul style="text-align: left; margin: 1rem 0; padding-left: 1rem;">
+                    <li>專業文件審核</li>
+                    <li>快速代辦流程</li>
+                    <li>多種簽證類型</li>
+                    <li>過簽保障服務</li>
+                </ul>
+                <a href="{{ url_for('service_detail', service_type='visa') }}" class="btn btn-primary">了解詳情</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- 聯絡資訊 -->
+<section class="services" style="background-color: var(--primary-black); color: var(--primary-white);">
+    <div class="container">
+        <h2 class="section-title" style="color: var(--primary-white);">立即聯絡我們</h2>
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; color: var(--light-gray);">
+                無論您有任何旅遊需求或疑問，我們的專業團隊都樂意為您服務。
+                歡迎透過電話、Email或親自來訪，我們將為您提供最專業的諮詢服務。
+            </p>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 2rem;">
+                <div>
+                    <h4 style="color: var(--primary-white); margin-bottom: 0.5rem;">電話諮詢</h4>
+                    <p style="color: var(--light-gray);">(02) 1234-5678</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--primary-white); margin-bottom: 0.5rem;">Email</h4>
+                    <p style="color: var(--light-gray);">info@packandgo.com.tw</p>
+                </div>
+                <div>
+                    <h4 style="color: var(--primary-white); margin-bottom: 0.5rem;">營業時間</h4>
+                    <p style="color: var(--light-gray);">週一至週六 09:00-18:00</p>
+                </div>
+            </div>
+            <a href="{{ url_for('contact') }}" class="btn btn-outline">前往聯絡頁面</a>
+        </div>
+    </div>
+</section>
+{% endblock %}

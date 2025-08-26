@@ -1,0 +1,274 @@
+{% extends "base.html" %}
+
+{% block title %}{{ service.title }} - Pack&Go 旅行社{% endblock %}
+
+{% block content %}
+<!-- 服務標題 -->
+<section class="hero" style="padding: 4rem 0;">
+    <div class="container">
+        <h1>{{ service.title }}</h1>
+        <p class="hero-description">{{ service.description }}</p>
+        <a href="{{ url_for('contact') }}" class="btn btn-outline">立即諮詢</a>
+    </div>
+</section>
+
+<!-- 服務詳細內容 -->
+<section class="services">
+    <div class="container">
+        {% if service_type == 'group-tour' %}
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title">包團旅遊服務</h2>
+            <div class="service-card" style="text-align: left;">
+                <h3>服務特色</h3>
+                <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                    <li>專業導遊全程陪同，提供詳細的歷史文化解說</li>
+                    <li>精心挑選的住宿與餐廳，確保舒適的旅遊體驗</li>
+                    <li>完整的行程規劃，包含交通、景點、購物等安排</li>
+                    <li>團體優惠價格，人數越多折扣越優惠</li>
+                    <li>24小時緊急聯絡服務，確保旅途安全</li>
+                </ul>
+                
+                <h3 style="margin-top: 2rem;">適合對象</h3>
+                <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                    <li>企業員工旅遊</li>
+                    <li>學校畢業旅行</li>
+                    <li>同學會聚會</li>
+                    <li>家族旅遊</li>
+                    <li>宗教團體參訪</li>
+                </ul>
+                
+                <h3 style="margin-top: 2rem;">報價包含</h3>
+                <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                    <li>來回機票或遊覽車費用</li>
+                    <li>全程住宿（雙人房）</li>
+                    <li>行程表內餐食</li>
+                    <li>景點門票</li>
+                    <li>專業導遊費用</li>
+                    <li>旅遊責任險</li>
+                </ul>
+            </div>
+        </div>
+        
+        {% elif service_type == 'custom-tour' %}
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title">客製旅遊服務</h2>
+            <div class="service-card" style="text-align: left;">
+                <h3>客製化流程</h3>
+                <div style="display: grid; gap: 1rem; margin: 1rem 0;">
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>1. 需求諮詢</h4>
+                        <p>詳細了解您的旅遊需求、預算、時間等條件</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>2. 行程規劃</h4>
+                        <p>根據您的需求設計專屬行程，包含景點、住宿、交通安排</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>3. 方案確認</h4>
+                        <p>提供詳細報價與行程說明，可根據您的意見調整</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>4. 預訂執行</h4>
+                        <p>確認後進行各項預訂，並提供完整的旅遊資料</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 2rem;">服務範圍</h3>
+                <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                    <li>蜜月旅行規劃</li>
+                    <li>親子旅遊安排</li>
+                    <li>個人深度旅遊</li>
+                    <li>商務差旅服務</li>
+                    <li>特殊主題旅遊（攝影、美食、文化等）</li>
+                </ul>
+            </div>
+        </div>
+        
+        {% elif service_type == 'cruise' %}
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title">郵輪服務</h2>
+            <div class="service-card" style="text-align: left;">
+                <h3>熱門航線</h3>
+                <div style="display: grid; gap: 1rem; margin: 1rem 0;">
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>地中海航線</h4>
+                        <p>探索義大利、法國、西班牙等歐洲經典城市</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>加勒比海航線</h4>
+                        <p>享受熱帶島嶼的陽光海灘與水上活動</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>日韓航線</h4>
+                        <p>體驗東亞文化，品嚐當地美食</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>東南亞航線</h4>
+                        <p>探索新加坡、泰國、越南等東南亞風情</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 2rem;">郵輪設施</h3>
+                <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                    <li>多樣化餐廳與酒吧</li>
+                    <li>娛樂表演與活動</li>
+                    <li>游泳池與健身中心</li>
+                    <li>購物中心與免稅店</li>
+                    <li>兒童俱樂部與家庭活動</li>
+                </ul>
+            </div>
+        </div>
+        
+        {% elif service_type == 'flight' %}
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title">機票服務</h2>
+            <div class="service-card" style="text-align: left;">
+                <h3>服務優勢</h3>
+                <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                    <li>與各大航空公司合作，提供最優惠價格</li>
+                    <li>即時查詢航班資訊與票價</li>
+                    <li>提供團體機票特殊折扣</li>
+                    <li>協助辦理座位選擇與餐食需求</li>
+                    <li>機場接送服務安排</li>
+                </ul>
+                
+                <h3 style="margin-top: 2rem;">票種選擇</h3>
+                <div style="display: grid; gap: 1rem; margin: 1rem 0;">
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>經濟艙</h4>
+                        <p>最經濟實惠的選擇，適合預算有限的旅客</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>豪華經濟艙</h4>
+                        <p>提供更舒適的座椅與服務，性價比高</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>商務艙</h4>
+                        <p>享受優質服務與舒適空間，適合商務旅客</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>頭等艙</h4>
+                        <p>最頂級的飛行體驗，享受奢華服務</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        {% elif service_type == 'hotel' %}
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title">飯店住宿服務</h2>
+            <div class="service-card" style="text-align: left;">
+                <h3>住宿類型</h3>
+                <div style="display: grid; gap: 1rem; margin: 1rem 0;">
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>商務飯店</h4>
+                        <p>位於市中心，交通便利，適合商務旅行</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>度假村</h4>
+                        <p>提供完整休閒設施，適合度假放鬆</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>精品旅館</h4>
+                        <p>獨特設計風格，提供個性化住宿體驗</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>經濟型住宿</h4>
+                        <p>價格實惠，乾淨舒適，適合背包客</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 2rem;">預訂優勢</h3>
+                <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                    <li>全球飯店資源網絡</li>
+                    <li>最優惠的價格保證</li>
+                    <li>免費房型升等機會</li>
+                    <li>彈性取消與更改政策</li>
+                    <li>專業住宿建議與推薦</li>
+                </ul>
+            </div>
+        </div>
+        
+        {% elif service_type == 'visa' %}
+        <div style="max-width: 800px; margin: 0 auto;">
+            <h2 class="section-title">中國簽證服務</h2>
+            <div class="service-card" style="text-align: left;">
+                <h3>簽證類型</h3>
+                <div style="display: grid; gap: 1rem; margin: 1rem 0;">
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>L簽 - 旅遊簽證</h4>
+                        <p>適用於觀光旅遊、探親訪友等目的</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>M簽 - 商務簽證</h4>
+                        <p>適用於商務洽談、會議、展覽等商務活動</p>
+                    </div>
+                    <div style="padding: 1rem; background-color: var(--light-gray); border-radius: 5px;">
+                        <h4>F簽 - 交流簽證</h4>
+                        <p>適用於學術交流、短期培訓等活動</p>
+                    </div>
+                </div>
+                
+                <h3 style="margin-top: 2rem;">代辦流程</h3>
+                <ol style="padding-left: 1.5rem; line-height: 1.8;">
+                    <li>提供護照正本及相關文件</li>
+                    <li>填寫簽證申請表格</li>
+                    <li>繳交代辦費用</li>
+                    <li>送件至中國簽證申請中心</li>
+                    <li>簽證核發後通知取件</li>
+                </ol>
+                
+                <h3 style="margin-top: 2rem;">所需文件</h3>
+                <ul style="padding-left: 1.5rem; line-height: 1.8;">
+                    <li>護照正本（效期6個月以上）</li>
+                    <li>身分證正反面影本</li>
+                    <li>2吋白底彩色照片</li>
+                    <li>旅遊行程表或邀請函</li>
+                    <li>在職證明或財力證明</li>
+                </ul>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+<!-- 相關套裝 -->
+{% if related_packages %}
+<section class="featured-packages">
+    <div class="container">
+        <h2 class="section-title">相關旅遊套裝</h2>
+        <div class="packages-grid">
+            {% for package in related_packages[:3] %}
+            <div class="package-card">
+                <div class="package-image" style="background-image: url('{{ package.image_url }}');"></div>
+                <div class="package-content">
+                    <h3>{{ package.title }}</h3>
+                    <div class="package-price">NT$ {{ package.price }}</div>
+                    <p>{{ package.description }}</p>
+                    <a href="{{ url_for('contact') }}" class="btn btn-primary" style="margin-top: 1rem;">立即諮詢</a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% if related_packages|length > 3 %}
+        <div style="text-align: center; margin-top: 2rem;">
+            <a href="{{ url_for('packages') }}" class="btn btn-secondary">查看更多套裝</a>
+        </div>
+        {% endif %}
+    </div>
+</section>
+{% endif %}
+
+<!-- 聯絡諮詢 -->
+<section class="services" style="background-color: var(--primary-black); color: var(--primary-white);">
+    <div class="container">
+        <div style="text-align: center; max-width: 600px; margin: 0 auto;">
+            <h2 class="section-title" style="color: var(--primary-white);">需要更多資訊？</h2>
+            <p style="font-size: 1.1rem; margin-bottom: 2rem; color: var(--light-gray);">
+                我們的專業顧問樂意為您提供詳細的服務說明與報價，歡迎隨時與我們聯絡。
+            </p>
+            <a href="{{ url_for('contact') }}" class="btn btn-outline">立即聯絡我們</a>
+        </div>
+    </div>
+</section>
+{% endblock %}
